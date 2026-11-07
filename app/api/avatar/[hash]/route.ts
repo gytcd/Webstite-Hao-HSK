@@ -1,0 +1,2 @@
+import {env} from 'cloudflare:workers';import {getChatGPTUser} from '../../../chatgpt-auth';import {avatarHandler} from '../../../../lib/avatar-service.mjs';
+export const dynamic='force-dynamic';async function handle(request:Request,context:{params:Promise<{hash:string}>}){return avatarHandler(request,env,await getChatGPTUser(),(await context.params).hash)}export const GET=handle;export const PUT=handle;export const HEAD=handle;

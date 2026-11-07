@@ -1,0 +1,1110 @@
+{
+  "schemaVersion": 1,
+  "id": "hsk-1",
+  "level": "1",
+  "name": "HSK 1 · Giáo trình mới 2026",
+  "edition": "新HSK教程 1 · 2026",
+  "builtIn": true,
+  "audioSource": "https://www.baulchino.com/new-hsk-audios-2026",
+  "documents": {
+    "textbook": {
+      "kind": "images",
+      "base": "/books/textbook/",
+      "count": 144,
+      "name": "hsk-course-1.PDF"
+    },
+    "workbook": {
+      "kind": "images",
+      "base": "/books/workbook/",
+      "count": 139,
+      "name": "hsk-course-1-workbook.PDF"
+    },
+    "writing": {
+      "kind": "images",
+      "base": "/books/writing/",
+      "count": 15,
+      "name": "hsk-course-1-writing.PDF"
+    }
+  },
+  "lessons": [
+    {
+      "id": "l01",
+      "number": 1,
+      "title": "AI小语，你好！",
+      "vi": "Chào AI Tiểu Ngữ!",
+      "start": 16,
+      "end": 19,
+      "printedStart": 1,
+      "workbookStart": 8,
+      "workbookEnd": 11,
+      "words": [
+        {
+          "h": "你好",
+          "p": "nǐ hǎo",
+          "v": "xin chào"
+        },
+        {
+          "h": "老师",
+          "p": "lǎoshī",
+          "v": "giáo viên"
+        },
+        {
+          "h": "您好",
+          "p": "nín hǎo",
+          "v": "xin chào (lịch sự)"
+        },
+        {
+          "h": "谢谢",
+          "p": "xièxie",
+          "v": "cảm ơn"
+        },
+        {
+          "h": "不客气",
+          "p": "bú kèqi",
+          "v": "không có gì"
+        },
+        {
+          "h": "再见",
+          "p": "zàijiàn",
+          "v": "tạm biệt"
+        },
+        {
+          "h": "你",
+          "p": "nǐ",
+          "v": "bạn"
+        },
+        {
+          "h": "您",
+          "p": "nín",
+          "v": "ông / bà / anh / chị (kính ngữ)"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Chào hỏi lịch sự",
+          "explanation": "Gặp bạn bè, dùng 你好. Khi muốn bày tỏ sự kính trọng, dùng 您好. Trả lời 谢谢 bằng 不客气.",
+          "h": "您好，老师！",
+          "p": "Nín hǎo, lǎoshī!",
+          "v": "Em chào thầy / cô!"
+        }
+      ],
+      "sourceNote": "Giáo trình trang 1–4; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l02",
+      "number": 2,
+      "title": "我叫李文",
+      "vi": "Tôi tên là Lý Văn",
+      "start": 20,
+      "end": 24,
+      "printedStart": 5,
+      "workbookStart": 12,
+      "workbookEnd": 15,
+      "words": [
+        {
+          "h": "我",
+          "p": "wǒ",
+          "v": "tôi"
+        },
+        {
+          "h": "叫",
+          "p": "jiào",
+          "v": "tên là / gọi"
+        },
+        {
+          "h": "什么",
+          "p": "shénme",
+          "v": "cái gì"
+        },
+        {
+          "h": "名字",
+          "p": "míngzi",
+          "v": "tên"
+        },
+        {
+          "h": "学生",
+          "p": "xuésheng",
+          "v": "học sinh / sinh viên"
+        },
+        {
+          "h": "对不起",
+          "p": "duìbuqǐ",
+          "v": "xin lỗi"
+        },
+        {
+          "h": "没关系",
+          "p": "méi guānxi",
+          "v": "không sao"
+        },
+        {
+          "h": "姓",
+          "p": "xìng",
+          "v": "họ / mang họ"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Trật tự cơ bản: Ai + làm gì",
+          "explanation": "Chủ ngữ đứng trước động từ. Để giới thiệu tên, dùng chủ ngữ + 叫 + tên.",
+          "h": "我叫南。",
+          "p": "Wǒ jiào Nán.",
+          "v": "Tôi tên là Nam."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 5–9; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l03",
+      "number": 3,
+      "title": "我是中国人",
+      "vi": "Tôi là người Trung Quốc",
+      "start": 25,
+      "end": 32,
+      "printedStart": 10,
+      "workbookStart": 16,
+      "workbookEnd": 19,
+      "words": [
+        {
+          "h": "是",
+          "p": "shì",
+          "v": "là"
+        },
+        {
+          "h": "中国",
+          "p": "Zhōngguó",
+          "v": "Trung Quốc"
+        },
+        {
+          "h": "人",
+          "p": "rén",
+          "v": "người"
+        },
+        {
+          "h": "的",
+          "p": "de",
+          "v": "trợ từ sở hữu"
+        },
+        {
+          "h": "吗",
+          "p": "ma",
+          "v": "trợ từ nghi vấn"
+        },
+        {
+          "h": "不",
+          "p": "bù",
+          "v": "không"
+        },
+        {
+          "h": "他",
+          "p": "tā",
+          "v": "anh ấy"
+        },
+        {
+          "h": "她",
+          "p": "tā",
+          "v": "cô ấy"
+        },
+        {
+          "h": "朋友",
+          "p": "péngyou",
+          "v": "bạn bè"
+        },
+        {
+          "h": "汉语",
+          "p": "Hànyǔ",
+          "v": "tiếng Trung"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Câu với 是",
+          "explanation": "Dùng chủ ngữ + 是 + danh từ để nói ai là ai. Phủ định dùng 不是.",
+          "h": "我是越南人。",
+          "p": "Wǒ shì Yuènán rén.",
+          "v": "Tôi là người Việt Nam."
+        },
+        {
+          "title": "Sở hữu với 的 và câu hỏi 吗",
+          "explanation": "的 nối người sở hữu và vật / người được nói đến. Thêm 吗 cuối câu trần thuật để hỏi có / không.",
+          "h": "这是你的书吗？",
+          "p": "Zhè shì nǐ de shū ma?",
+          "v": "Đây có phải là sách của bạn không?"
+        }
+      ],
+      "sourceNote": "Giáo trình trang 10–17; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l04",
+      "number": 4,
+      "title": "我有两个孩子",
+      "vi": "Tôi có hai người con",
+      "start": 33,
+      "end": 41,
+      "printedStart": 18,
+      "workbookStart": 20,
+      "workbookEnd": 28,
+      "words": [
+        {
+          "h": "有",
+          "p": "yǒu",
+          "v": "có"
+        },
+        {
+          "h": "两",
+          "p": "liǎng",
+          "v": "hai (trước lượng từ)"
+        },
+        {
+          "h": "个",
+          "p": "gè",
+          "v": "lượng từ thông dụng"
+        },
+        {
+          "h": "孩子",
+          "p": "háizi",
+          "v": "con / trẻ em"
+        },
+        {
+          "h": "家",
+          "p": "jiā",
+          "v": "nhà / gia đình"
+        },
+        {
+          "h": "一",
+          "p": "yī",
+          "v": "một"
+        },
+        {
+          "h": "二",
+          "p": "èr",
+          "v": "hai"
+        },
+        {
+          "h": "三",
+          "p": "sān",
+          "v": "ba"
+        },
+        {
+          "h": "四",
+          "p": "sì",
+          "v": "bốn"
+        },
+        {
+          "h": "五",
+          "p": "wǔ",
+          "v": "năm"
+        },
+        {
+          "h": "六",
+          "p": "liù",
+          "v": "sáu"
+        },
+        {
+          "h": "七",
+          "p": "qī",
+          "v": "bảy"
+        },
+        {
+          "h": "八",
+          "p": "bā",
+          "v": "tám"
+        },
+        {
+          "h": "九",
+          "p": "jiǔ",
+          "v": "chín"
+        },
+        {
+          "h": "十",
+          "p": "shí",
+          "v": "mười"
+        },
+        {
+          "h": "零",
+          "p": "líng",
+          "v": "không (số 0)"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Có gì: 有 + số + lượng từ + danh từ",
+          "explanation": "Dùng 两 trước lượng từ để đếm hai đơn vị. Phủ định của 有 là 没有.",
+          "h": "我有两个朋友。",
+          "p": "Wǒ yǒu liǎng gè péngyou.",
+          "v": "Tôi có hai người bạn."
+        },
+        {
+          "title": "Hỏi tiếp bằng 呢",
+          "explanation": "Đặt chủ đề + 呢 khi muốn hỏi lại cùng một vấn đề.",
+          "h": "你呢？",
+          "p": "Nǐ ne?",
+          "v": "Còn bạn thì sao?"
+        }
+      ],
+      "sourceNote": "Giáo trình trang 18–26; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l05",
+      "number": 5,
+      "title": "今天我休息",
+      "vi": "Hôm nay tôi nghỉ",
+      "start": 42,
+      "end": 49,
+      "printedStart": 27,
+      "workbookStart": 29,
+      "workbookEnd": 37,
+      "words": [
+        {
+          "h": "今天",
+          "p": "jīntiān",
+          "v": "hôm nay"
+        },
+        {
+          "h": "休息",
+          "p": "xiūxi",
+          "v": "nghỉ ngơi"
+        },
+        {
+          "h": "星期",
+          "p": "xīngqī",
+          "v": "tuần / thứ"
+        },
+        {
+          "h": "年",
+          "p": "nián",
+          "v": "năm"
+        },
+        {
+          "h": "月",
+          "p": "yuè",
+          "v": "tháng"
+        },
+        {
+          "h": "号",
+          "p": "hào",
+          "v": "ngày / số"
+        },
+        {
+          "h": "会",
+          "p": "huì",
+          "v": "biết làm (đã học)"
+        },
+        {
+          "h": "明天",
+          "p": "míngtiān",
+          "v": "ngày mai"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Nói ngày tháng",
+          "explanation": "Năm → tháng → ngày. Trong khẩu ngữ, 号 được dùng để nói ngày trong tháng.",
+          "h": "今天星期一。",
+          "p": "Jīntiān xīngqīyī.",
+          "v": "Hôm nay là thứ Hai."
+        },
+        {
+          "title": "Biết làm với 会",
+          "explanation": "会 thường nói đến kỹ năng đã học được. Sau 会 là động từ.",
+          "h": "我会说汉语。",
+          "p": "Wǒ huì shuō Hànyǔ.",
+          "v": "Tôi biết nói tiếng Trung."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 27–34; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l06",
+      "number": 6,
+      "title": "你的手机号是多少？",
+      "vi": "Số điện thoại của bạn là bao nhiêu?",
+      "start": 50,
+      "end": 59,
+      "printedStart": 35,
+      "workbookStart": 38,
+      "workbookEnd": 45,
+      "words": [
+        {
+          "h": "手机",
+          "p": "shǒujī",
+          "v": "điện thoại di động"
+        },
+        {
+          "h": "多少",
+          "p": "duōshao",
+          "v": "bao nhiêu"
+        },
+        {
+          "h": "想",
+          "p": "xiǎng",
+          "v": "muốn / nghĩ"
+        },
+        {
+          "h": "怎么",
+          "p": "zěnme",
+          "v": "thế nào / bằng cách nào"
+        },
+        {
+          "h": "去",
+          "p": "qù",
+          "v": "đi"
+        },
+        {
+          "h": "学校",
+          "p": "xuéxiào",
+          "v": "trường học"
+        },
+        {
+          "h": "坐",
+          "p": "zuò",
+          "v": "ngồi / đi (phương tiện)"
+        },
+        {
+          "h": "车",
+          "p": "chē",
+          "v": "xe"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Muốn làm gì: 想 + động từ",
+          "explanation": "想 thể hiện mong muốn. Hỏi cách làm bằng 怎么 + động từ.",
+          "h": "你想怎么去学校？",
+          "p": "Nǐ xiǎng zěnme qù xuéxiào?",
+          "v": "Bạn muốn đến trường bằng cách nào?"
+        },
+        {
+          "title": "Chuỗi hành động",
+          "explanation": "Có thể đặt liên tiếp các động từ có cùng chủ ngữ.",
+          "h": "我去书店买书。",
+          "p": "Wǒ qù shūdiàn mǎi shū.",
+          "v": "Tôi đến hiệu sách mua sách."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 35–44; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l07",
+      "number": 7,
+      "title": "我晚上六点半下班",
+      "vi": "Tôi tan làm lúc sáu rưỡi tối",
+      "start": 60,
+      "end": 68,
+      "printedStart": 45,
+      "workbookStart": 46,
+      "workbookEnd": 54,
+      "words": [
+        {
+          "h": "晚上",
+          "p": "wǎnshang",
+          "v": "buổi tối"
+        },
+        {
+          "h": "点",
+          "p": "diǎn",
+          "v": "giờ (thời điểm)"
+        },
+        {
+          "h": "半",
+          "p": "bàn",
+          "v": "nửa / rưỡi"
+        },
+        {
+          "h": "下班",
+          "p": "xiàbān",
+          "v": "tan làm"
+        },
+        {
+          "h": "上班",
+          "p": "shàngbān",
+          "v": "đi làm"
+        },
+        {
+          "h": "现在",
+          "p": "xiànzài",
+          "v": "bây giờ"
+        },
+        {
+          "h": "分",
+          "p": "fēn",
+          "v": "phút"
+        },
+        {
+          "h": "呢",
+          "p": "ne",
+          "v": "trợ từ ngữ khí"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Nói giờ và vị trí của thời gian",
+          "explanation": "Thời gian thường đứng trước động từ: chủ ngữ + thời gian + hành động. 半 là rưỡi.",
+          "h": "我晚上六点半下班。",
+          "p": "Wǒ wǎnshang liù diǎn bàn xiàbān.",
+          "v": "Tôi tan làm lúc sáu rưỡi tối."
+        },
+        {
+          "title": "吧 và 呢",
+          "explanation": "吧 có thể làm lời đề nghị nhẹ nhàng hơn. 呢 có thể nhấn mạnh trạng thái đang tiếp diễn trong ngữ cảnh phù hợp.",
+          "h": "我们走吧。",
+          "p": "Wǒmen zǒu ba.",
+          "v": "Chúng ta đi nhé."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 45–53; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l08",
+      "number": 8,
+      "title": "我爸爸也在医院工作",
+      "vi": "Bố tôi cũng làm việc ở bệnh viện",
+      "start": 69,
+      "end": 75,
+      "printedStart": 54,
+      "workbookStart": 55,
+      "workbookEnd": 63,
+      "words": [
+        {
+          "h": "爸爸",
+          "p": "bàba",
+          "v": "bố"
+        },
+        {
+          "h": "妈妈",
+          "p": "māma",
+          "v": "mẹ"
+        },
+        {
+          "h": "也",
+          "p": "yě",
+          "v": "cũng"
+        },
+        {
+          "h": "在",
+          "p": "zài",
+          "v": "ở / tại"
+        },
+        {
+          "h": "医院",
+          "p": "yīyuàn",
+          "v": "bệnh viện"
+        },
+        {
+          "h": "工作",
+          "p": "gōngzuò",
+          "v": "làm việc / công việc"
+        },
+        {
+          "h": "能",
+          "p": "néng",
+          "v": "có thể (khả năng / điều kiện)"
+        },
+        {
+          "h": "里",
+          "p": "lǐ",
+          "v": "bên trong"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Vị trí với 在",
+          "explanation": "Chủ ngữ + 在 + địa điểm. Nếu có hành động, 在 + địa điểm thường đặt trước động từ hành động.",
+          "h": "我爸爸也在医院工作。",
+          "p": "Wǒ bàba yě zài yīyuàn gōngzuò.",
+          "v": "Bố tôi cũng làm việc ở bệnh viện."
+        },
+        {
+          "title": "Khả năng với 能",
+          "explanation": "能 nói đến khả năng hoặc điều kiện cho phép thực hiện hành động.",
+          "h": "我今天能来。",
+          "p": "Wǒ jīntiān néng lái.",
+          "v": "Hôm nay tôi có thể đến."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 54–60; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l09",
+      "number": 9,
+      "title": "我明天上午在学校学习",
+      "vi": "Sáng mai tôi học ở trường",
+      "start": 76,
+      "end": 84,
+      "printedStart": 61,
+      "workbookStart": 64,
+      "workbookEnd": 72,
+      "words": [
+        {
+          "h": "上午",
+          "p": "shàngwǔ",
+          "v": "buổi sáng"
+        },
+        {
+          "h": "下午",
+          "p": "xiàwǔ",
+          "v": "buổi chiều"
+        },
+        {
+          "h": "学习",
+          "p": "xuéxí",
+          "v": "học tập"
+        },
+        {
+          "h": "书",
+          "p": "shū",
+          "v": "sách"
+        },
+        {
+          "h": "桌子",
+          "p": "zhuōzi",
+          "v": "cái bàn"
+        },
+        {
+          "h": "上",
+          "p": "shàng",
+          "v": "trên"
+        },
+        {
+          "h": "下",
+          "p": "xià",
+          "v": "dưới"
+        },
+        {
+          "h": "第",
+          "p": "dì",
+          "v": "tiền tố số thứ tự"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Địa điểm + 有",
+          "explanation": "Dùng để giới thiệu có người / vật ở một nơi.",
+          "h": "桌子上有一本书。",
+          "p": "Zhuōzi shàng yǒu yì běn shū.",
+          "v": "Trên bàn có một quyển sách."
+        },
+        {
+          "title": "Thời gian trước địa điểm",
+          "explanation": "Một thứ tự thông dụng: ai + khi nào + ở đâu + làm gì. 第 + số chỉ thứ tự.",
+          "h": "我明天上午在学校学习。",
+          "p": "Wǒ míngtiān shàngwǔ zài xuéxiào xuéxí.",
+          "v": "Sáng mai tôi học ở trường."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 61–69; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l10",
+      "number": 10,
+      "title": "这儿的苹果真便宜！",
+      "vi": "Táo ở đây thật rẻ!",
+      "start": 85,
+      "end": 92,
+      "printedStart": 70,
+      "workbookStart": 73,
+      "workbookEnd": 81,
+      "words": [
+        {
+          "h": "这儿",
+          "p": "zhèr",
+          "v": "ở đây"
+        },
+        {
+          "h": "苹果",
+          "p": "píngguǒ",
+          "v": "táo"
+        },
+        {
+          "h": "真",
+          "p": "zhēn",
+          "v": "thật / thật là"
+        },
+        {
+          "h": "便宜",
+          "p": "piányi",
+          "v": "rẻ"
+        },
+        {
+          "h": "钱",
+          "p": "qián",
+          "v": "tiền"
+        },
+        {
+          "h": "块",
+          "p": "kuài",
+          "v": "đồng (tiền, khẩu ngữ)"
+        },
+        {
+          "h": "贵",
+          "p": "guì",
+          "v": "đắt"
+        },
+        {
+          "h": "怎么样",
+          "p": "zěnmeyàng",
+          "v": "như thế nào / ra sao"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Tính từ làm vị ngữ",
+          "explanation": "Tính từ có thể trực tiếp làm vị ngữ. Trong câu đơn giản, 很 thường nối chủ ngữ với tính từ; không dùng 是 trong mẫu này.",
+          "h": "这个苹果很便宜。",
+          "p": "Zhège píngguǒ hěn piányi.",
+          "v": "Quả táo này rẻ."
+        },
+        {
+          "title": "Hỏi đánh giá bằng 怎么样",
+          "explanation": "Đặt chủ đề + 怎么样 để hỏi ý kiến hoặc tình trạng.",
+          "h": "这儿的苹果怎么样？",
+          "p": "Zhèr de píngguǒ zěnmeyàng?",
+          "v": "Táo ở đây thế nào?"
+        }
+      ],
+      "sourceNote": "Giáo trình trang 70–77; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l11",
+      "number": 11,
+      "title": "我读大学呢",
+      "vi": "Tôi đang học đại học",
+      "start": 93,
+      "end": 100,
+      "printedStart": 78,
+      "workbookStart": 82,
+      "workbookEnd": 90,
+      "words": [
+        {
+          "h": "读",
+          "p": "dú",
+          "v": "đọc / học (trường)"
+        },
+        {
+          "h": "大学",
+          "p": "dàxué",
+          "v": "đại học"
+        },
+        {
+          "h": "正在",
+          "p": "zhèngzài",
+          "v": "đang"
+        },
+        {
+          "h": "要",
+          "p": "yào",
+          "v": "muốn / cần"
+        },
+        {
+          "h": "看",
+          "p": "kàn",
+          "v": "xem / nhìn"
+        },
+        {
+          "h": "书店",
+          "p": "shūdiàn",
+          "v": "hiệu sách"
+        },
+        {
+          "h": "买",
+          "p": "mǎi",
+          "v": "mua"
+        },
+        {
+          "h": "喜欢",
+          "p": "xǐhuan",
+          "v": "thích"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Hỏi bằng khẳng định + phủ định",
+          "explanation": "Lặp động từ ở dạng khẳng định và phủ định; không thêm 吗 vào cùng mẫu câu.",
+          "h": "你是不是学生？",
+          "p": "Nǐ shì bu shì xuésheng?",
+          "v": "Bạn có phải là sinh viên không?"
+        },
+        {
+          "title": "Đang làm: 正在 + động từ",
+          "explanation": "正在 nhấn mạnh hành động đang diễn ra. 要 + động từ thể hiện muốn hoặc cần làm.",
+          "h": "我正在看书。",
+          "p": "Wǒ zhèngzài kàn shū.",
+          "v": "Tôi đang đọc sách."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 78–85; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l12",
+      "number": 12,
+      "title": "昨天下雪了",
+      "vi": "Hôm qua tuyết rơi rồi",
+      "start": 101,
+      "end": 109,
+      "printedStart": 86,
+      "workbookStart": 91,
+      "workbookEnd": 99,
+      "words": [
+        {
+          "h": "昨天",
+          "p": "zuótiān",
+          "v": "hôm qua"
+        },
+        {
+          "h": "下雪",
+          "p": "xià xuě",
+          "v": "tuyết rơi"
+        },
+        {
+          "h": "天气",
+          "p": "tiānqì",
+          "v": "thời tiết"
+        },
+        {
+          "h": "冷",
+          "p": "lěng",
+          "v": "lạnh"
+        },
+        {
+          "h": "热",
+          "p": "rè",
+          "v": "nóng"
+        },
+        {
+          "h": "了",
+          "p": "le",
+          "v": "trợ từ (hoàn thành / thay đổi)"
+        },
+        {
+          "h": "太",
+          "p": "tài",
+          "v": "quá / rất"
+        },
+        {
+          "h": "下雨",
+          "p": "xià yǔ",
+          "v": "mưa"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "了: tình huống thay đổi",
+          "explanation": "了 ở cuối câu có thể báo một tình huống mới hoặc sự thay đổi; không phải lúc nào cũng là thì quá khứ.",
+          "h": "下雪了。",
+          "p": "Xià xuě le.",
+          "v": "Tuyết rơi rồi."
+        },
+        {
+          "title": "太…了",
+          "explanation": "Dùng 太 + tính từ + 了 để bày tỏ mức độ cao hoặc cảm thán.",
+          "h": "今天太冷了！",
+          "p": "Jīntiān tài lěng le!",
+          "v": "Hôm nay lạnh quá!"
+        }
+      ],
+      "sourceNote": "Giáo trình trang 86–94; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l13",
+      "number": 13,
+      "title": "请给我一杯茶",
+      "vi": "Cho tôi một cốc trà",
+      "start": 110,
+      "end": 117,
+      "printedStart": 95,
+      "workbookStart": 100,
+      "workbookEnd": 108,
+      "words": [
+        {
+          "h": "请",
+          "p": "qǐng",
+          "v": "mời / xin"
+        },
+        {
+          "h": "给",
+          "p": "gěi",
+          "v": "cho / đưa cho"
+        },
+        {
+          "h": "杯",
+          "p": "bēi",
+          "v": "cốc / lượng từ cốc"
+        },
+        {
+          "h": "茶",
+          "p": "chá",
+          "v": "trà"
+        },
+        {
+          "h": "可以",
+          "p": "kěyǐ",
+          "v": "có thể / được phép"
+        },
+        {
+          "h": "一下",
+          "p": "yíxià",
+          "v": "một chút / một lát"
+        },
+        {
+          "h": "水",
+          "p": "shuǐ",
+          "v": "nước"
+        },
+        {
+          "h": "喝",
+          "p": "hē",
+          "v": "uống"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "可以: xin phép và cho phép",
+          "explanation": "可以 + động từ thường dùng để hỏi hoặc nói điều được phép làm.",
+          "h": "我可以坐这儿吗？",
+          "p": "Wǒ kěyǐ zuò zhèr ma?",
+          "v": "Tôi có thể ngồi đây không?"
+        },
+        {
+          "title": "Động từ + 一下 và hai tân ngữ",
+          "explanation": "一下 làm hành động nhẹ và ngắn hơn. 给 có thể đi cùng người nhận và vật được cho.",
+          "h": "请给我一杯茶。",
+          "p": "Qǐng gěi wǒ yì bēi chá.",
+          "v": "Xin cho tôi một cốc trà."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 95–102; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l14",
+      "number": 14,
+      "title": "我看了一个电影",
+      "vi": "Tôi đã xem một bộ phim",
+      "start": 118,
+      "end": 126,
+      "printedStart": 103,
+      "workbookStart": 109,
+      "workbookEnd": 117,
+      "words": [
+        {
+          "h": "电影",
+          "p": "diànyǐng",
+          "v": "phim"
+        },
+        {
+          "h": "都",
+          "p": "dōu",
+          "v": "đều"
+        },
+        {
+          "h": "吃饭",
+          "p": "chī fàn",
+          "v": "ăn cơm"
+        },
+        {
+          "h": "见面",
+          "p": "jiàn miàn",
+          "v": "gặp mặt"
+        },
+        {
+          "h": "昨天",
+          "p": "zuótiān",
+          "v": "hôm qua"
+        },
+        {
+          "h": "饭",
+          "p": "fàn",
+          "v": "cơm / bữa ăn"
+        },
+        {
+          "h": "吃",
+          "p": "chī",
+          "v": "ăn"
+        },
+        {
+          "h": "一起",
+          "p": "yìqǐ",
+          "v": "cùng nhau"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "了 sau động từ",
+          "explanation": "Động từ + 了 thường biểu thị hành động đã được thực hiện. Có thể cần ngữ cảnh hoặc thời gian để xác định lúc xảy ra.",
+          "h": "我昨天看了一个电影。",
+          "p": "Wǒ zuótiān kàn le yí gè diànyǐng.",
+          "v": "Hôm qua tôi đã xem một bộ phim."
+        },
+        {
+          "title": "Đều: 都 và từ li hợp",
+          "explanation": "都 đặt trước động từ. Các từ như 见面, 吃饭 có cấu trúc động từ + tân ngữ, có thể tách trong một số cách dùng.",
+          "h": "我们都喜欢这个电影。",
+          "p": "Wǒmen dōu xǐhuan zhège diànyǐng.",
+          "v": "Chúng tôi đều thích bộ phim này."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 103–111; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    },
+    {
+      "id": "l15",
+      "number": 15,
+      "title": "大兴机场见！",
+      "vi": "Hẹn gặp ở sân bay Đại Hưng!",
+      "start": 127,
+      "end": 136,
+      "printedStart": 112,
+      "workbookStart": 118,
+      "workbookEnd": 127,
+      "words": [
+        {
+          "h": "机场",
+          "p": "jīchǎng",
+          "v": "sân bay"
+        },
+        {
+          "h": "见",
+          "p": "jiàn",
+          "v": "gặp"
+        },
+        {
+          "h": "还",
+          "p": "hái",
+          "v": "còn / cũng"
+        },
+        {
+          "h": "回",
+          "p": "huí",
+          "v": "về / quay lại"
+        },
+        {
+          "h": "北京",
+          "p": "Běijīng",
+          "v": "Bắc Kinh"
+        },
+        {
+          "h": "飞机",
+          "p": "fēijī",
+          "v": "máy bay"
+        },
+        {
+          "h": "高兴",
+          "p": "gāoxìng",
+          "v": "vui vẻ"
+        },
+        {
+          "h": "再",
+          "p": "zài",
+          "v": "lại / nữa"
+        }
+      ],
+      "grammar": [
+        {
+          "title": "Bổ sung với 还 / 也",
+          "explanation": "还 có thể bổ sung thêm một việc hoặc ý. 也 nêu sự tương đồng; hai từ thường đứng trước động từ.",
+          "h": "我想喝茶，还想喝水。",
+          "p": "Wǒ xiǎng hē chá, hái xiǎng hē shuǐ.",
+          "v": "Tôi muốn uống trà, cũng muốn uống nước."
+        }
+      ],
+      "sourceNote": "Giáo trình trang 112–121; giải thích tiếng Việt và từ trọng tâm do Hǎo biên soạn để hỗ trợ học, không phải bản chép toàn bộ danh mục từ mới."
+    }
+  ]
+}

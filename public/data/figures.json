@@ -1,0 +1,293 @@
+[
+  {
+    "lesson": 1,
+    "src": "lesson-01.webp",
+    "sourcePage": 16,
+    "printedPage": 1,
+    "alt": "Nhân vật AI Tiểu Ngữ và cô giáo chào nhau trong văn phòng",
+    "caption": "Hình trong giáo trình · bài 1, trang 1",
+    "width": 336,
+    "height": 232,
+    "crop": [
+      486,
+      776,
+      822,
+      1008
+    ]
+  },
+  {
+    "lesson": 2,
+    "src": "lesson-02.webp",
+    "sourcePage": 20,
+    "printedPage": 5,
+    "alt": "Cô giáo trò chuyện với ba sinh viên trong lớp học",
+    "caption": "Hình trong giáo trình · bài 2, trang 5",
+    "width": 738,
+    "height": 389,
+    "crop": [
+      82,
+      858,
+      820,
+      1247
+    ]
+  },
+  {
+    "lesson": 3,
+    "src": "lesson-03.webp",
+    "sourcePage": 25,
+    "printedPage": 10,
+    "alt": "Hai sinh viên ngồi trò chuyện trong khuôn viên trường",
+    "caption": "Hình trong giáo trình · bài 3, trang 10",
+    "width": 378,
+    "height": 435,
+    "crop": [
+      465,
+      760,
+      843,
+      1195
+    ]
+  },
+  {
+    "lesson": 4,
+    "src": "lesson-04.webp",
+    "sourcePage": 33,
+    "printedPage": 18,
+    "alt": "Bộ hình nhận biết số đếm, giáo viên, học sinh và thành viên gia đình",
+    "caption": "Hình trong giáo trình · bài 4, trang 18",
+    "width": 750,
+    "height": 405,
+    "crop": [
+      105,
+      789,
+      855,
+      1194
+    ]
+  },
+  {
+    "lesson": 5,
+    "src": "lesson-05.webp",
+    "sourcePage": 42,
+    "printedPage": 27,
+    "alt": "Bộ hình về lịch, nghỉ ngơi, thức ăn và sinh hoạt hằng ngày",
+    "caption": "Hình trong giáo trình · bài 5, trang 27",
+    "width": 761,
+    "height": 459,
+    "crop": [
+      75,
+      706,
+      836,
+      1165
+    ]
+  },
+  {
+    "lesson": 6,
+    "src": "lesson-06.webp",
+    "sourcePage": 50,
+    "printedPage": 35,
+    "alt": "Bộ hình điện thoại, siêu thị, phương tiện và sinh hoạt",
+    "caption": "Hình trong giáo trình · bài 6, trang 35",
+    "width": 745,
+    "height": 401,
+    "crop": [
+      75,
+      773,
+      820,
+      1174
+    ]
+  },
+  {
+    "lesson": 7,
+    "src": "lesson-07.webp",
+    "sourcePage": 60,
+    "printedPage": 45,
+    "alt": "Sáu mặt đồng hồ luyện nhận biết các thời điểm trong ngày",
+    "caption": "Hình trong giáo trình · bài 7, trang 45",
+    "width": 760,
+    "height": 488,
+    "crop": [
+      100,
+      770,
+      860,
+      1258
+    ]
+  },
+  {
+    "lesson": 8,
+    "src": "lesson-08.webp",
+    "sourcePage": 69,
+    "printedPage": 54,
+    "alt": "Bộ hình địa điểm, bác sĩ, đồ vật và mèo con",
+    "caption": "Hình trong giáo trình · bài 8, trang 54",
+    "width": 744,
+    "height": 411,
+    "crop": [
+      108,
+      704,
+      852,
+      1115
+    ]
+  },
+  {
+    "lesson": 9,
+    "src": "lesson-09.webp",
+    "sourcePage": 76,
+    "printedPage": 61,
+    "alt": "Bộ hình người học, đọc sách, tủ sách và đồ vật trong trường học",
+    "caption": "Hình trong giáo trình · bài 9, trang 61",
+    "width": 780,
+    "height": 433,
+    "crop": [
+      75,
+      767,
+      855,
+      1200
+    ]
+  },
+  {
+    "lesson": 10,
+    "src": "lesson-10.webp",
+    "sourcePage": 85,
+    "printedPage": 70,
+    "alt": "Bộ hình táo, tiền, cốc và tình huống giao tiếp",
+    "caption": "Hình trong giáo trình · bài 10, trang 70",
+    "width": 745,
+    "height": 406,
+    "crop": [
+      110,
+      744,
+      855,
+      1150
+    ]
+  },
+  {
+    "lesson": 11,
+    "src": "lesson-11.webp",
+    "sourcePage": 93,
+    "printedPage": 78,
+    "alt": "Bộ hình hiệu sách, cuộc họp, đi xe và sinh hoạt",
+    "caption": "Hình trong giáo trình · bài 11, trang 78",
+    "width": 755,
+    "height": 460,
+    "crop": [
+      105,
+      720,
+      860,
+      1180
+    ]
+  },
+  {
+    "lesson": 12,
+    "src": "lesson-12.webp",
+    "sourcePage": 101,
+    "printedPage": 86,
+    "alt": "Bộ hình thời tiết và tình trạng cơ thể",
+    "caption": "Hình trong giáo trình · bài 12, trang 86",
+    "width": 755,
+    "height": 448,
+    "crop": [
+      105,
+      762,
+      860,
+      1210
+    ]
+  },
+  {
+    "lesson": 13,
+    "src": "lesson-13.webp",
+    "sourcePage": 110,
+    "printedPage": 95,
+    "alt": "Bộ hình đũa, bánh mì, trà và giao tiếp",
+    "caption": "Hình trong giáo trình · bài 13, trang 95",
+    "width": 750,
+    "height": 413,
+    "crop": [
+      75,
+      732,
+      825,
+      1145
+    ]
+  },
+  {
+    "lesson": 14,
+    "src": "lesson-14.webp",
+    "sourcePage": 118,
+    "printedPage": 103,
+    "alt": "Bộ hình hoạt động, chữ Hán và danh lam thắng cảnh",
+    "caption": "Hình trong giáo trình · bài 14, trang 103",
+    "width": 785,
+    "height": 457,
+    "crop": [
+      75,
+      748,
+      860,
+      1205
+    ]
+  },
+  {
+    "lesson": 15,
+    "src": "lesson-15.webp",
+    "sourcePage": 127,
+    "printedPage": 112,
+    "alt": "Bộ hình Bắc Kinh, máy bay, địa điểm và gặp gỡ",
+    "caption": "Hình trong giáo trình · bài 15, trang 112",
+    "width": 755,
+    "height": 415,
+    "crop": [
+      105,
+      775,
+      860,
+      1190
+    ]
+  },
+  {
+    "lesson": 6,
+    "src": "lesson-06-phone.webp",
+    "sourcePage": 50,
+    "printedPage": 35,
+    "alt": "Điện thoại di động được cầm trên tay",
+    "caption": "手机 · shǒujī · Điện thoại di động",
+    "width": 224,
+    "height": 152,
+    "crop": [
+      335,
+      778,
+      559,
+      930
+    ],
+    "word": "手机"
+  },
+  {
+    "lesson": 10,
+    "src": "lesson-10-apples.webp",
+    "sourcePage": 85,
+    "printedPage": 70,
+    "alt": "Những quả táo đỏ trong hình từ vựng của giáo trình",
+    "caption": "苹果 · píngguǒ · Táo",
+    "width": 226,
+    "height": 153,
+    "crop": [
+      115,
+      747,
+      341,
+      900
+    ],
+    "word": "苹果"
+  },
+  {
+    "lesson": 13,
+    "src": "lesson-13-tea.webp",
+    "sourcePage": 110,
+    "printedPage": 95,
+    "alt": "Cốc trà trong phần hình từ vựng của giáo trình",
+    "caption": "茶 · chá · Trà",
+    "width": 224,
+    "height": 154,
+    "crop": [
+      335,
+      919,
+      559,
+      1073
+    ],
+    "word": "茶"
+  }
+]

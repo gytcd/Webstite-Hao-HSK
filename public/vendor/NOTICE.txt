@@ -1,0 +1,8 @@
+Vendored dependencies:
+PDF.js 5.4.624 (Mozilla Foundation), Apache-2.0.
+pdf-lib 1.17.1, MIT.
+Tesseract.js 6.0.1 and Tesseract.js-core, Apache-2.0.
+Tesseract Chinese/English LSTM traineddata, Apache-2.0.
+JSZip 3.10.1, MIT.
+Standard font data and CMaps retain their bundled notices.
+See the corresponding npm packages for full license texts.

@@ -1,0 +1,2 @@
+import {sqliteTable,text,integer,primaryKey} from 'drizzle-orm/sqlite-core';
+export const studyRecords=sqliteTable('study_records',{userId:text('user_id').notNull(),recordKey:text('record_key').notNull(),value:text('value').notNull(),stamp:integer('stamp').notNull(),actor:text('actor').notNull(),deleted:integer('deleted').notNull().default(0),updatedAt:integer('updated_at').notNull()},t=>[primaryKey({columns:[t.userId,t.recordKey]})]);

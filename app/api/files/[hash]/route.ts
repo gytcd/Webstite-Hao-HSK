@@ -1,0 +1,2 @@
+import {env} from 'cloudflare:workers';import {getChatGPTUser} from '../../../chatgpt-auth';import {filesHandler} from '../../../../lib/study-service.mjs';
+export const dynamic='force-dynamic';async function handle(r:Request,c:{params:Promise<{hash:string}>}){return filesHandler(r,env,await getChatGPTUser(),(await c.params).hash)}export const GET=handle;export const PUT=handle;export const HEAD=handle;
