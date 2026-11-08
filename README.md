@@ -1,17 +1,18 @@
-# Hǎo · HSK learning workspace
+# Hǎo · Góc học HSK
 
-Same private Site: appgprj_6aec417b9a04819194070594eb230ba6.
+Website học HSK dùng Cloudflare Workers, Static Assets và D1. Người dùng đăng nhập bằng mã email qua Cloudflare Access; mỗi tài khoản có tiến độ, ghi chú, hồ sơ và ảnh đại diện riêng. PDF tự nhập được lưu trên thiết bị và chuyển bằng bản sao lưu ZIP. Bản triển khai này không dùng R2.
 
-The blue edition runs on the supplied Vinext/Cloudflare starter. Authored static UI and textbook assets are in `public/`; the HTML shell is returned by `app/route.ts`. Hosted sign-in/sign-out is owned by Sites. No client-side passwords, alternate OAuth stack or identity supplied in request bodies is used.
+**Hướng dẫn đưa web lên Cloudflare và tự quản lý:** [DEPLOY-CLOUDFLARE.md](DEPLOY-CLOUDFLARE.md).
 
-Authenticated `/api/me`, `/api/sync` and `/api/files/:hash` routes use the starter's ChatGPT identity helper. All records and PDF objects are keyed by the stable signed-in user ID. Private audience remains unchanged. D1 holds per-field progress/course records; R2 stores uploaded PDFs per user. Per-record timestamps and deterministic device IDs merge independent offline edits. Newer edits win for the same note. Tombstones preserve deletion. Client changes are queued in account-scoped IndexedDB, retried on connection/focus and polled while visible. PDF uploads are limited to 95 MiB each; larger local files do not block progress sync. Other-device PDF downloads are lazy and cached when opened.
+```sh
+npm ci
+npm run build
+npm run test:standalone
+npm run dev
+```
 
-On first sign-in, version 2 local data is claimed/migrated once to an account-specific database; a different account does not inherit it. Version 1 custom words and progress still migrate where authorized by the local claim. Profile settings show cloud status and last successful sync.
+Giao diện xem trên máy tại `http://127.0.0.1:5173`. Đăng nhập và đồng bộ được kiểm tra trên URL Cloudflare sau khi cấu hình Access.
 
-Original HSK 1 textbook (144 pages), workbook (139 pages) and writing excerpt (15 pages) remain. There are 15 authored study units, 130 selected vocabulary entries (129 distinct), 93 textbook and 33 workbook audio links. Eighteen exact textbook crops cover all 15 lessons, with three extra word pictures. Their source-page/crop metadata is in `public/data/figures.json`.
+Chỉnh giao diện trong `ui-shell.html`, `public/app.js` và `public/style.css`. Nội dung bài học ở `public/data/`; tài nguyên giáo trình ở `public/books/`, `public/figures/` và `public/vendor/`. Worker triển khai là `worker/standalone.mjs`, cấu hình tại `wrangler.jsonc`.
 
-Tests: `node tests/core.mjs` and `node --test tests/cloud.test.mjs`. The latter verifies authentication, account isolation, stale edits/deletion, origin checks, PDF ownership, client merge and image mappings. Build with the Sites build helper. D1 migrations are generated from `db/schema.ts`; apply to preview explicitly, and Sites applies hosted schema migrations on deployment. Public authored files are copied into deployment output by the starter.
-
-Editable profiles in **Tài khoản & đồng bộ → Thông tin cá nhân** include display name, full name, contact email, location, bio and avatar. Contact email is independent of ChatGPT sign-in identity. Each field synchronizes independently. JPG/PNG/WebP avatars are cropped to a 512 px square in the browser, stored by content hash, and uploaded to private account-owned R2 objects through `/api/avatar/:hash`. Images can be replaced or removed from the profile; offline changes retry on reconnect. The original source image limit is 8 MiB; the API accepts at most 2 MiB. Browser image preparation requires HTTPS.
-
-Profile checks: `node --test tests/profile.test.mjs tests/cloud.test.mjs` and `node tests/profile-worker.mjs`. The Worker integration exercises real image bytes, avatar ownership, D1 profile persistence and account isolation. Browser QA covers editing, saving, reload persistence and cancelling drafts; the HTTP preview cannot exercise WebCrypto avatar preparation, so use the HTTPS Site for that browser flow.
+Mã kiểm tra chữ ký, issuer, audience và hạn dùng của Access JWT trước khi phục vụ website hoặc API. Khi thiếu cấu hình đăng nhập, Worker hiển thị hướng dẫn thiết lập và chặn dữ liệu tài khoản. Các bảng D1 còn thiếu được tạo bằng `CREATE TABLE IF NOT EXISTS`; dữ liệu hiện có được giữ.
