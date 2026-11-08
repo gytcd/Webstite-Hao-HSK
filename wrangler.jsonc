@@ -17,5 +17,9 @@
       "binding": "DB",
       "database_id": "a83768bc-63e2-46f6-bb9f-c34313308144"
     }
-  ]
+  ],
+  "vars": {
+    "ACCESS_TEAM_DOMAIN": "odd-queen-5cc6.cloudflareaccess.com",
+    "ACCESS_AUD": "a24098c36893aad2e9fbfbdeb03dc61130cb3ae427af05a6f76f3593d9069b3a"
+  }
 }

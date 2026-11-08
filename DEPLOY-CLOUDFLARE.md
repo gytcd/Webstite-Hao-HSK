@@ -39,15 +39,15 @@ Nhấn Deploy sau khi mã đã có trong `main`. Website sẽ hiển thị hư�
 2. Mở Worker `haohsk` → **Access** → **Protect this Worker behind Access**. Chọn bảo vệ **All traffic**, không chỉ preview. Giao diện cũ có thể đặt nút **Enable Cloudflare Access** tại **Settings → Domains & Routes**, cạnh địa chỉ `workers.dev`.
 3. Mở ứng dụng Access vừa tạo trong **Zero Trust → Access controls → Applications**. Chỉnh chính sách **Allow → Include → Emails** thành danh sách email được sử dụng web. Xóa các điều kiện rộng như cho toàn bộ tên miền nếu bạn chỉ muốn vài người dùng.
 4. Trong **Zero Trust → Integrations → Identity providers**, thêm **One-time PIN** nếu chưa có; sau đó bật phương thức này trong ứng dụng Access để người dùng nhận mã qua email. Các tài khoản Zero Trust mới có thể mặc định dùng tài khoản Cloudflare thay vì mã email. Không cần tạo mật khẩu riêng trên website.
-5. Sao chép **Team domain** dạng `ten-nhom.cloudflareaccess.com` và **Application Audience (AUD) Tag** của chính ứng dụng này.
-6. Vào Worker → **Settings → Variables & Secrets** và thêm hai biến kiểu Text:
+5. Trong Worker → **Access → Application values**, lấy **AUD tag** và **JWKS** của ứng dụng này. Team domain là tên miền trong URL JWKS, không gồm `/cdn-cgi/access/certs`.
+6. Hai thông số đã được cấu hình tại `vars` trong **`wrangler.jsonc`** và được triển khai cùng mã nguồn:
 
 | Tên biến | Nội dung |
 |---|---|
-| `ACCESS_TEAM_DOMAIN` | Team domain, ví dụ `ten-nhom.cloudflareaccess.com` |
+| `ACCESS_TEAM_DOMAIN` | `odd-queen-5cc6.cloudflareaccess.com` |
 | `ACCESS_AUD` | Audience tag của ứng dụng Access đang bảo vệ Worker |
 
-Lưu và áp dụng thay đổi. Không dùng Team name đơn lẻ thay cho Team domain. Không dùng Audience của ứng dụng khác. Đây là thông số định danh, không phải mật khẩu. Cấu hình `keep_vars: true` giữ các biến khi triển khai phiên bản sau.
+Khi tạo lại ứng dụng Access hoặc đổi Team domain, sửa hai giá trị trong `wrangler.jsonc`, commit và đẩy lên `main`. Dùng domain đầy đủ và AUD của đúng ứng dụng đang bảo vệ Worker. Đây là thông số định danh, không phải mật khẩu. Các biến này được quản lý trong mã nguồn để các lần triển khai tiếp theo dùng đúng cấu hình; không cần nhập lại chúng thủ công ở dashboard. `keep_vars: true` giữ các biến khác được cấu hình riêng trên dashboard.
 
 7. Mở URL website, đăng nhập bằng email đã có trong danh sách, nhận mã rồi xác nhận. Mở **Tài khoản & đồng bộ**, kiểm tra đúng email và trạng thái đồng bộ.
 8. Mở trên thiết bị thứ hai bằng cùng email, ghi một ghi chú thử và kiểm tra nó xuất hiện ở thiết bị còn lại.
