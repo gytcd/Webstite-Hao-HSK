@@ -11,6 +11,11 @@
     "build": "node scripts/build-standalone.mjs",
     "start": "node scripts/preview-standalone.mjs",
     "deploy": "npm run build && npx --yes wrangler@4.92.0 deploy",
-    "test:standalone": "node --test tests/standalone.test.mjs"
+    "test:standalone": "node --test tests/standalone.test.mjs",
+    "test:workers": "node --test tests/access-runtime.test.mjs",
+    "test": "npm run build && npm run test:standalone && npm run test:workers"
+  },
+  "devDependencies": {
+    "miniflare": "4.20260515.0"
   }
 }

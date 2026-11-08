@@ -77,11 +77,13 @@ Yêu cầu Node.js 22.13 trở lên; khuyến nghị Node.js 24 như bộ kiểm
 ```sh
 npm ci
 npm run build
-npm run test:standalone
+npm test
 npm run dev
 ```
 
 Mở `http://127.0.0.1:5173` để xem và sửa giao diện. Bản xem trên máy lưu dữ liệu học tại trình duyệt; đăng nhập email và đồng bộ tài khoản được kiểm tra trên URL Cloudflare sau khi Access đã được cấu hình.
+
+`npm test` chạy cả kiểm tra tài khoản/D1 trên Node và kiểm tra xác minh JWT trong runtime Workers bằng Miniflare. Bộ kiểm tra Workers tải khóa qua API `fetch` thật của runtime và xác nhận không đi theo chuyển hướng của máy chủ khóa. Miniflare chỉ là phụ thuộc phát triển, không được đóng gói vào Worker vận hành.
 
 Có thể kiểm tra đóng gói Worker mà không xuất bản:
 
