@@ -23,13 +23,13 @@ export async function scanDocument(blob,{ocr=false,log=()=>{},onProgress=()=>{}}
  return {count:pdf.numPages,pages,scanned:scans,lessons:detectLessons(pages),hasText:pages.some(p=>p.trim().length>30)};
  }finally{stopReject=null;await pdf.destroy();if(worker){await worker.terminate();worker=null}}
 }
-export async function buildDraft({level,name,book,workbook,writing,ocr,log,onProgress}){
- const id=levelId(level);if(!book)throw Error('Hãy chọn PDF giáo trình hoặc nhập gói JSON.');if(book.size>250*1024*1024)throw Error('PDF lớn hơn 250 MB. Hãy chia nhỏ trước khi nhập.');
+export async function buildDraft({level,name,syllabus='unspecified',book,workbook,writing,ocr,log,onProgress}){
+ const id=levelId(level)+(['hsk2','hsk3'].includes(syllabus)?'-'+syllabus:'');if(!book)throw Error('Hãy chọn PDF giáo trình hoặc nhập gói JSON.');if(book.size>250*1024*1024)throw Error('PDF lớn hơn 250 MB. Hãy chia nhỏ trước khi nhập.');
  log('Đọc giáo trình '+book.name+'…');const scan=await scanDocument(book,{ocr,log,onProgress});
  const lessons=scan.lessons.length?scan.lessons:[{number:1,title:'Toàn bộ tài liệu — chỉnh cách chia bài bên dưới',start:1,end:scan.count,rawText:scan.pages.join('\n\n')}];
- const course=normalizeCourse({level,name,lessons:lessons.map(l=>({...l,words:extractWords(l.rawText||'')}))});course.importedAt=new Date().toISOString();course.sourceScanned=!scan.hasText;course.documents={textbook:{kind:'pdf',fileId:id+':textbook',name:book.name,count:scan.count,normalized:true}};
+ const course=normalizeCourse({level,name,syllabus,lessons:lessons.map(l=>({...l,words:extractWords(l.rawText||'')}))});course.importedAt=new Date().toISOString();course.sourceScanned=!scan.hasText;course.documents={textbook:{kind:'pdf',fileId:id+':textbook',name:book.name,count:scan.count,normalized:true}};
  const files=[{id:id+':textbook',blob:book,name:book.name}];
  for(const [kind,file]of [['workbook',workbook],['writing',writing]])if(file){log('Kiểm tra '+file.name+'…');const pdf=await openPdf(file,true);course.documents[kind]={kind:'pdf',fileId:id+':'+kind,name:file.name,count:pdf.numPages,normalized:true};files.push({id:id+':'+kind,blob:file,name:file.name});await pdf.destroy()}
  return {course,files,pages:scan.pages,detected:scan.lessons.length,hasText:scan.hasText};
 }
-export function templateCourse(){return {schemaVersion:1,level:'2',name:'HSK 2 · Đổi tên theo giáo trình của bạn',lessons:[{number:1,title:'Tên bài theo sách',vi:'Tên tiếng Việt',start:1,end:5,words:[{h:'学习',p:'xuéxí',v:'học tập',ex:'我喜欢学习。',ep:'Wǒ xǐhuan xuéxí.',ev:'Tôi thích học.'}],grammar:[{title:'Tên mẫu câu',explanation:'Giải thích tiếng Việt đã được kiểm tra.',h:'我喜欢学习。',p:'Wǒ xǐhuan xuéxí.',v:'Tôi thích học.'}]}]}}
+export function templateCourse(){return {schemaVersion:1,level:'2',syllabus:'unspecified',name:'HSK 2 · Đổi tên theo giáo trình của bạn',lessons:[{number:1,title:'Tên bài theo sách',vi:'Tên tiếng Việt',start:1,end:5,words:[{h:'学习',p:'xuéxí',v:'học tập',ex:'我喜欢学习。',ep:'Wǒ xǐhuan xuéxí.',ev:'Tôi thích học.'}],grammar:[{title:'Tên mẫu câu',explanation:'Giải thích tiếng Việt đã được kiểm tra.',h:'我喜欢学习。',p:'Wǒ xǐhuan xuéxí.',v:'Tôi thích học.'}]}]}}

@@ -1,6 +1,8 @@
 import {accessSettings, createAccessVerifier} from '../lib/access-auth.mjs';
 import {initialize, rememberAccount, avatarHandler} from '../lib/standalone-store.mjs';
 import {json, syncHandler} from '../lib/study-service.mjs';
+import {aiHandler} from '../lib/ai-service.mjs';
+import {reminderHandler,sendReminders} from '../lib/reminders.mjs';
 
 const verify = createAccessVerifier();
 const escapeHTML = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
@@ -23,6 +25,7 @@ function setupResponse(status = 503, {url, settings, code = 'ACCESS_CONFIGURATIO
   return new Response('<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hǎo · Đăng nhập</title><body style="font:16px system-ui;max-width:640px;margin:12vh auto;padding:24px;line-height:1.7"><h1>' + title + '</h1><p>' + message + '</p>' + links + detail + '</body></html>', {status: loggedOut ? 200 : status, headers: {'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'referrer-policy': 'no-referrer', 'x-hao-access-status': missingConfig ? 'configuration-missing' : loggedOut ? 'logged-out' : 'session-invalid', 'x-hao-access-code': code}});
 }
 export default {
+  async scheduled(controller,env) {await sendReminders(env,controller.scheduledTime);},
   async fetch(request, env) {
     const url = new URL(request.url), api = url.pathname.startsWith('/api/');
     const settings = accessSettings(env);
@@ -37,6 +40,8 @@ export default {
       try {
         if (!env.DB) return json({error: 'Chưa kết nối cơ sở dữ liệu D1.'}, 503);
         await initialize(env.DB);
+        if (url.pathname === '/api/ai') return await aiHandler(request,env,user);
+        if (url.pathname === '/api/reminders') return await reminderHandler(request,env,user);
         if (url.pathname === '/api/me' && request.method === 'GET') {
           await rememberAccount(env.DB, user);
           return json({authenticated: true, user: {id: user.userId, name: user.displayName, email: user.email}, cloudReady: true, capabilities: {pdfSync: false, avatarSync: true}, signIn: '/login', signOut: '/cdn-cgi/access/logout'});

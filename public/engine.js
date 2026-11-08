@@ -3,7 +3,7 @@ export function safeUrl(s){try{const u=new URL(s,location.origin);return ['https
 export function levelId(level){if(!/^[1-9](?:[abAB])?$/.test(String(level)))throw Error('Cấp HSK không hợp lệ.');return 'hsk-'+String(level).toLowerCase()}
 const text=(s,n=500)=>typeof s==='string'?s.slice(0,n):'';
 export function normalizeCourse(input){
- const c=input.course||input;const id=levelId(c.level);
+ const c=input.course||input;const syllabus=['hsk2','hsk3'].includes(c.syllabus)?c.syllabus:'unspecified';const id=levelId(c.level)+(syllabus==='unspecified'?'':'-'+syllabus);
  if(!Array.isArray(c.lessons)||!c.lessons.length||c.lessons.length>500)throw Error('Gói cần có từ 1 đến 500 bài học.');
  const seen=new Set();const lessons=c.lessons.map((l,i)=>{
   const number=Number(l.number??i+1);if(!Number.isInteger(number)||number<1||number>999||seen.has(number))throw Error('Số thứ tự bài bị trùng hoặc không hợp lệ.');seen.add(number);
@@ -15,7 +15,7 @@ export function normalizeCourse(input){
   if(Array.isArray(l.audio))result.audio=l.audio.slice(0,100).map(t=>({label:text(t.label,180),url:text(t.url,2000)})).filter(t=>/^https:\/\//.test(t.url));
   return result;
  }).sort((a,b)=>a.number-b.number);
- return {schemaVersion:1,id,level:String(c.level).toLowerCase(),name:text(c.name||'HSK '+c.level,160),edition:text(c.edition,250),audioSource:text(c.audioSource||'https://www.baulchino.com/new-hsk-audios-2026',2000),lessons,documents:{},builtIn:false};
+ return {schemaVersion:1,id,level:String(c.level).toLowerCase(),syllabus,name:text(c.name||'HSK '+c.level,160),edition:text(c.edition,250),audioSource:text(c.audioSource||'https://www.baulchino.com/new-hsk-audios-2026',2000),lessons,documents:{},builtIn:false};
 }
 export function findHeading(raw,fallbackNumber){
  const normalized=raw.replace(/\r/g,'').replace(/([\u4e00-\u9fff])[ \t]+(?=[\u4e00-\u9fff])/g,'$1');let m=normalized.match(/(?:Lesson|LESSON|Unit|UNIT)\s*([0-9]{1,2})(?![0-9])/);if(!m)m=normalized.match(/第\s*([0-9一二三四五六七八九十]{1,3})\s*[课課]/);

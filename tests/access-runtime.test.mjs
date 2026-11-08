@@ -79,3 +79,36 @@ test('Workers runtime rejects signing-key redirects without requesting their des
     await mf.dispose();
   }
 });
+
+test('production Worker verifies identity, uses native D1 and calls Gemini through its protected API', async () => {
+  const paths=['worker/standalone.mjs','lib/access-auth.mjs','lib/standalone-store.mjs','lib/study-service.mjs','lib/ai-service.mjs','lib/reminders.mjs','public/study-model.js'];
+  const modules=await Promise.all(paths.map(async path=>({type:'ESModule',path,contents:await readFile(new URL('../'+path,import.meta.url),'utf8')})));
+  const config=JSON.parse(await readFile(new URL('../wrangler.jsonc',import.meta.url),'utf8'));
+  const feedback={reply:'你好！',pinyin:'Nǐ hǎo!',translation:'Xin chào!',corrected:'你好！',explanation:'Lời chào thông dụng.',issues:[],score:0,scoreNote:''};
+  let modelCalls=0,assets=0;
+  const mf=new Miniflare({
+    compatibilityDate:config.compatibility_date,
+    modules:[{type:'ESModule',path:'main.mjs',contents:"export {default} from './worker/standalone.mjs';"},...modules],
+    bindings:{...settings,GEMINI_API_KEY:'runtime-test-key'},
+    d1Databases:{DB:'learning-test-database'},
+    serviceBindings:{ASSETS:()=>{assets++;return new RuntimeResponse('private asset');}},
+    outboundService:request=>{
+      if(request.url==='https://'+settings.ACCESS_TEAM_DOMAIN+'/cdn-cgi/access/certs')return RuntimeResponse.json({keys:[jwk]});
+      assert.equal(request.url,'https://generativelanguage.googleapis.com/v1beta/interactions');
+      assert.equal(request.headers.get('x-goog-api-key'),'runtime-test-key');modelCalls++;
+      return RuntimeResponse.json({status:'completed',steps:[{type:'model_output',content:[{type:'text',text:JSON.stringify(feedback)}]}]});
+    }
+  });
+  try {
+    assert.equal((await mf.dispatchFetch('https://hao.test/')).status,401);assert.equal(assets,0);
+    const headers={'cf-access-jwt-assertion':assertion};
+    const identity=await mf.dispatchFetch('https://hao.test/api/me',{headers});assert.equal(identity.status,200);
+    const response=await mf.dispatchFetch('https://hao.test/api/ai',{method:'POST',headers:{...headers,origin:'https://hao.test','content-type':'application/json','x-hao-ai':'1'},body:JSON.stringify({mode:'grammar',text:'你好'})});
+    const result=await response.json();assert.equal(response.status,200,JSON.stringify(result));assert.equal(result.result.reply,feedback.reply);assert.equal(modelCalls,1);
+    const configResult=await(await mf.dispatchFetch('https://hao.test/api/ai',{headers})).json();assert.equal(configResult.used,1);assert.equal(JSON.stringify(configResult).includes('runtime-test-key'),false);
+    const review={id:'runtime-review',card:'hsk-1:你',courseId:'hsk-1',word:'你',grade:3,at:Date.now()};
+    const record={key:'lab:review:runtime-review',value:review,stamp:Date.now(),actor:'runtime_device',deleted:false};
+    const saved=await mf.dispatchFetch('https://hao.test/api/sync?v=2',{method:'POST',headers:{...headers,origin:'https://hao.test','content-type':'application/json'},body:JSON.stringify({records:[record]})});assert.equal(saved.status,200);assert.equal((await saved.json()).records.length,1);
+    const legacy=await(await mf.dispatchFetch('https://hao.test/api/sync',{headers})).json();assert.equal(legacy.records.length,0);
+  } finally {await mf.dispose();}
+});

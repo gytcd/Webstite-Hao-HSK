@@ -5,6 +5,9 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const root = fileURLToPath(new URL('../dist/client/', import.meta.url));
+const option = name => {const index=process.argv.indexOf(name);return index<0?null:process.argv[index+1];};
+const host=option('--host')||'127.0.0.1',port=Number(option('--port')||5173);
+if(!['127.0.0.1','0.0.0.0','localhost'].includes(host)||!Number.isInteger(port)||port<1024||port>65535)throw Error('Địa chỉ xem thử không hợp lệ.');
 const types = {'.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.wasm': 'application/wasm', '.pdf': 'application/pdf', '.gz': 'application/gzip', '.ttf': 'font/ttf'};
 createServer(async (req, res) => {
   try {
@@ -12,6 +15,11 @@ createServer(async (req, res) => {
     if (url.pathname === '/api/me') {
       res.writeHead(200, {'content-type': 'application/json', 'cache-control': 'no-store'});
       res.end(JSON.stringify({authenticated: false, cloudReady: false, capabilities: {pdfSync: false}, signIn: '/', signOut: '/'}));
+      return;
+    }
+    if (['/api/ai','/api/reminders'].includes(url.pathname)) {
+      res.writeHead(req.method==='GET'?200:503,{'content-type':'application/json','cache-control':'no-store'});
+      res.end(JSON.stringify(req.method==='GET'?{configured:false,enabled:false,email:'',limit:15,used:0}:{error:'Tính năng này cần khóa dịch vụ trên Cloudflare.'}));
       return;
     }
     if (!['GET', 'HEAD'].includes(req.method)) {res.writeHead(405); res.end(); return;}
@@ -23,4 +31,4 @@ createServer(async (req, res) => {
   } catch {
     res.writeHead(404); res.end('Not found');
   }
-}).listen(5173, '127.0.0.1', () => console.log('Xem giao diện tại http://127.0.0.1:5173 — đăng nhập và đồng bộ chạy trên Cloudflare.'));
+}).listen(port,host,()=>console.log('Xem giao diện tại http://'+host+':'+port+' — đăng nhập và đồng bộ chạy trên Cloudflare.'));

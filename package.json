@@ -13,9 +13,12 @@
     "deploy": "npm run build && npx --yes wrangler@4.92.0 deploy",
     "test:standalone": "node --test tests/standalone.test.mjs",
     "test:workers": "node --test tests/access-runtime.test.mjs",
-    "test": "npm run build && npm run test:standalone && npm run test:workers"
+    "test": "npm run build && npm run test:standalone && npm run test:learning && npm run test:workers",
+    "test:learning": "node --test tests/learning.test.mjs"
   },
   "devDependencies": {
+    "hanzi-writer": "3.7.3",
+    "hanzi-writer-data": "2.0.1",
     "miniflare": "4.20260515.0"
   }
 }

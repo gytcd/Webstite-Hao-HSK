@@ -16,3 +16,7 @@ Giao diện xem trên máy tại `http://127.0.0.1:5173`. Đăng nhập và đ�
 Chỉnh giao diện trong `ui-shell.html`, `public/app.js` và `public/style.css`. Nội dung bài học ở `public/data/`; tài nguyên giáo trình ở `public/books/`, `public/figures/` và `public/vendor/`. Worker triển khai là `worker/standalone.mjs`, cấu hình tại `wrangler.jsonc`.
 
 Mã kiểm tra chữ ký, issuer, audience và hạn dùng của Access JWT trước khi phục vụ website hoặc API. Khi thiếu cấu hình đăng nhập, Worker hiển thị hướng dẫn thiết lập và chặn dữ liệu tài khoản. Các bảng D1 còn thiếu được tạo bằng `CREATE TABLE IF NOT EXISTS`; dữ liệu hiện có được giữ.
+
+## Công cụ luyện tập
+
+Website có SRS, luyện nét chữ, đọc/nghe, bài luyện tính giờ, nhập bộ đề có nguồn, sổ lỗi sai và báo cáo mục tiêu. Xem [FEATURES-HSK.md](FEATURES-HSK.md) để sử dụng và bật Gemini/email nhắc học bằng Cloudflare Secrets.

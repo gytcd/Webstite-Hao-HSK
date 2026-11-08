@@ -98,3 +98,7 @@ npx --yes wrangler@4.92.0 deploy --dry-run
 - [Xác minh JWT và lấy AUD](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/)
 - [Đăng nhập One-time PIN](https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/one-time-pin/)
 - [Quản lý và thu hồi phiên](https://developers.cloudflare.com/cloudflare-one/access-controls/access-settings/session-management/)
+
+## Công cụ luyện tập mở rộng
+
+SRS, bộ đề, lịch sử bài làm và báo cáo dùng cùng tài khoản/D1 hiện tại. Hai chuẩn giáo trình có mã riêng khi nhập mới. Xem [FEATURES-HSK.md](FEATURES-HSK.md) để cấu hình Gemini, email nhắc học lúc 21:00 Việt Nam và nhập bộ đề có nguồn. AI và email chưa kết nối sẽ hiện trạng thái rõ ràng, các công cụ luyện còn lại dùng được độc lập.
