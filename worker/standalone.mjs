@@ -4,7 +4,13 @@ import {json, syncHandler} from '../lib/study-service.mjs';
 
 const verify = createAccessVerifier();
 function setupResponse(status = 503) {
-  return new Response('<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hǎo · Cấu hình đăng nhập</title><body style="font:16px system-ui;max-width:640px;margin:12vh auto;padding:24px;line-height:1.7"><h1>Hǎo cần hoàn tất cấu hình đăng nhập.</h1><p>Chủ website hãy bật Cloudflare Access cho ứng dụng này, cho phép các email được dùng và đặt hai biến <code>ACCESS_TEAM_DOMAIN</code>, <code>ACCESS_AUD</code> trong Settings → Variables &amp; Secrets.</p><p>Sau khi cấu hình, mở lại trang để đăng nhập bằng mã gửi qua email.</p></body></html>', {status, headers: {'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff'}});
+  const missingConfig = status === 503;
+  const title = missingConfig ? 'Hǎo chưa có đủ cấu hình đăng nhập.' : 'Phiên đăng nhập chưa hợp lệ.';
+  const message = missingConfig
+    ? 'Chủ website cần kiểm tra hai biến ACCESS_TEAM_DOMAIN và ACCESS_AUD trong cấu hình triển khai.'
+    : 'Hãy đăng xuất phiên hiện tại rồi mở lại website để đăng nhập bằng email đã được cấp quyền. Nếu vẫn gặp thông báo này, chủ website cần kiểm tra phương thức đăng nhập và cấu hình ứng dụng Access.';
+  const links = missingConfig ? '' : '<p><a href="/cdn-cgi/access/logout">Đăng xuất phiên hiện tại</a> · <a href="/">Mở lại website</a></p>';
+  return new Response('<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hǎo · Đăng nhập</title><body style="font:16px system-ui;max-width:640px;margin:12vh auto;padding:24px;line-height:1.7"><h1>' + title + '</h1><p>' + message + '</p>' + links + '</body></html>', {status, headers: {'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'x-hao-access-status': missingConfig ? 'configuration-missing' : 'session-invalid'}});
 }
 export default {
   async fetch(request, env) {
