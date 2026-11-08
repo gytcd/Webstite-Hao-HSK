@@ -77,6 +77,60 @@ test('Access JWT validation checks signature, algorithm, issuer, audience and va
   assert.equal(await verify(new Request('https://hao.test', {headers: {'cf-access-jwt-assertion': parts.join('.')}}), settings), null);
 });
 
+test('signed Access cookies authenticate the same account and reject forged or ambiguous sessions', async () => {
+  const verify = createAccessVerifier(), valid = await token();
+  const cookieRequest = (value, headers = {}) => new Request('https://hao.test/', {headers: {cookie: 'preference=blue; CF_Authorization=' + value + '; other=1', ...headers}});
+  const fromHeader = await verify(new Request('https://hao.test/', {headers: {'cf-access-jwt-assertion': valid}}), settings, {now});
+  const fromCookie = await verify(cookieRequest(valid), settings, {now});
+  assert.equal(fromCookie.userId, fromHeader.userId);
+  const diagnostics = {};
+  assert.equal(await verify(cookieRequest(valid, {'cf-access-jwt-assertion': 'invalid'}), settings, {now, diagnostics}), null);
+  assert.equal(diagnostics.code, 'ACCESS_TOKEN_INVALID');
+  assert.equal(await verify(cookieRequest(valid + '; CF_Authorization=' + valid), settings, {now, diagnostics}), null);
+  assert.equal(diagnostics.code, 'ACCESS_COOKIE_AMBIGUOUS');
+  const parts = valid.split('.');
+  parts[1] = b64(JSON.stringify({...baseClaims, email: 'victim@example.com'}));
+  assert.equal(await verify(cookieRequest(parts.join('.')), settings, {now, diagnostics}), null);
+  assert.equal(diagnostics.code, 'ACCESS_SIGNATURE_INVALID');
+  assert.equal(await verify(cookieRequest(await token({aud: ['another-app']})), settings, {now, diagnostics}), null);
+  assert.equal(diagnostics.code, 'ACCESS_AUDIENCE_MISMATCH');
+  assert.equal(await verify(cookieRequest(await token({exp: Math.floor(now / 1000) - 1})), settings, {now, diagnostics}), null);
+  assert.equal(diagnostics.code, 'ACCESS_SESSION_EXPIRED');
+  assert.equal(await verify(cookieRequest(valid), settings, {now, diagnostics, fetcher: async () => {throw new Error('offline');}}) !== null, true);
+  const offline = createAccessVerifier();
+  assert.equal(await offline(cookieRequest(valid), settings, {now, diagnostics, fetcher: async () => {throw new Error('offline');}}), null);
+  assert.equal(diagnostics.code, 'ACCESS_KEYS_UNAVAILABLE');
+});
+
+test('sign-in recovery clears logout state without exposing assets, tokens or redirect parameters', async () => {
+  let served = false;
+  const env = {...settings, ASSETS: {fetch: async () => {served = true; return new Response('private');}}};
+  const loggedOut = await worker.fetch(new Request('https://hao.test/?__cf_access_message=logged_out'), env);
+  assert.equal(loggedOut.status, 200);
+  assert.match(await loggedOut.text(), /Bạn đã đăng xuất/);
+  assert.equal(loggedOut.headers.get('cache-control'), 'no-store');
+  const signIn = await worker.fetch(new Request('https://hao.test/login?redirect_url=https://evil.test'), env);
+  const destination = new URL(signIn.headers.get('location'));
+  assert.equal(signIn.status, 303);
+  assert.equal(destination.origin, 'https://' + settings.ACCESS_TEAM_DOMAIN);
+  assert.equal(destination.pathname, '/cdn-cgi/access/login/hao.test');
+  assert.equal(destination.searchParams.get('kid'), settings.ACCESS_AUD);
+  assert.equal(destination.searchParams.get('redirect_url'), '/');
+  assert.equal(signIn.headers.get('cache-control'), 'no-store');
+  const invalid = await worker.fetch(new Request('https://hao.test/', {headers: {cookie: 'CF_Authorization=private-invalid-token'}}), env);
+  const errorPage = await invalid.text();
+  assert.equal(invalid.status, 401);
+  assert.match(errorPage, /ACCESS_TOKEN_INVALID/);
+  assert.doesNotMatch(errorPage, /private-invalid-token/);
+  const api = await worker.fetch(new Request('https://hao.test/api/me'), env);
+  assert.equal(api.status, 401);
+  assert.equal((await api.json()).code, 'ACCESS_TOKEN_MISSING');
+  assert.equal(served, false);
+  const clean = await worker.fetch(await request('/?__cf_access_message=logged_out'), env);
+  assert.equal(clean.status, 303);
+  assert.equal(clean.headers.get('location'), 'https://hao.test/');
+});
+
 test('signing key rotation refreshes certificates and account ID remains stable for one subject', async () => {
   const verify = createAccessVerifier();
   const one = new Request('https://hao.test', {headers: {'cf-access-jwt-assertion': await token()}});

@@ -52,7 +52,7 @@ Khi tạo lại ứng dụng Access hoặc đổi Team domain, sửa hai giá tr
 7. Mở URL website, đăng nhập bằng email đã có trong danh sách, nhận mã rồi xác nhận. Mở **Tài khoản & đồng bộ**, kiểm tra đúng email và trạng thái đồng bộ.
 8. Mở trên thiết bị thứ hai bằng cùng email, ghi một ghi chú thử và kiểm tra nó xuất hiện ở thiết bị còn lại.
 
-Các bảng `study_records`, `hao_accounts`, `hao_avatars` được tạo nếu chưa có, khi API nhận yêu cầu đã đăng nhập. Không xóa bảng hay ghi đè dữ liệu hiện có. JWT được kiểm tra cả chữ ký và audience; gửi tùy ý các header định danh cũ không đăng nhập được.
+Các bảng `study_records`, `hao_accounts`, `hao_avatars` được tạo nếu chưa có, khi API nhận yêu cầu đã đăng nhập. Không xóa bảng hay ghi đè dữ liệu hiện có. JWT được đọc từ header Access hoặc cookie ứng dụng `CF_Authorization` khi thiếu header; cả hai cách đều kiểm tra chữ ký, issuer, audience và hạn dùng. Header không hợp lệ không được thay thế bằng cookie. Gửi tùy ý các header định danh cũ không đăng nhập được.
 
 ## 4. PDF và dữ liệu từ website cũ
 
@@ -67,6 +67,7 @@ Các bảng `study_records`, `hao_accounts`, `hao_avatars` được tạo nếu 
 - **Thu hồi quyền:** bỏ email khỏi Allow và thu hồi phiên của người đó trong phần quản lý người dùng Access. Phiên cũ có thể còn hiệu lực cho tới khi bị thu hồi hoặc hết hạn.
 - **Sửa nội dung/giao diện:** chỉnh các tệp trong bảng ở bước 1, kiểm tra rồi đẩy lên nhánh `main`. Cloudflare tự build và triển khai nếu bạn đã kết nối nhánh đó.
 - **Xem lỗi:** Worker → Deployments/Build history và Logs. Mã 503 kèm hướng dẫn đăng nhập thường do thiếu biến Access hoặc D1 chưa được gắn đúng; mã 401 sau khi đăng nhập thường do sai Team domain/AUD hoặc token không hợp lệ.
+- **Khôi phục đăng nhập:** mở `/login` để đến cổng Access với đúng audience và quay về trang chủ sạch. Trang sau đăng xuất có nút đăng nhập lại. Nếu đã nhập mã email mà vẫn lỗi, đọc **Mã kiểm tra** trên trang: `ACCESS_TOKEN_MISSING` là chưa nhận token, `ACCESS_ISSUER_MISMATCH`/`ACCESS_AUDIENCE_MISMATCH` là cấu hình không khớp, `ACCESS_KEYS_UNAVAILABLE` là chưa tải được khóa xác minh. Chỉ cần mã kiểm tra để hỗ trợ; không sao chép JWT hoặc cookie.
 - **Sao lưu:** dùng chức năng xuất dữ liệu của D1 trong dashboard và giữ ZIP của các PDF riêng. GitHub lưu mã nguồn, không tự sao lưu những dữ liệu này.
 
 ## 6. Kiểm tra trên máy của bạn
