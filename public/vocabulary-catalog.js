@@ -1,3 +1,4 @@
+import {mergeCourse} from './course-merge.js';
 export const VOCABULARY_DATASET = 'hsk-vocabulary-2025';
 export const isBundledVocabulary = course => course?.dataset === VOCABULARY_DATASET && course.builtIn === true;
 
@@ -29,23 +30,14 @@ export async function loadVocabularyCourses(fetcher=fetch) {
 }
 
 export function mergeBaseCourses(base, stored) {
-  const map=new Map([...base,...stored].map(c=>[c.id,c]));
-  // Reference datasets are shipped with the app. User progress stays in state.
-  for(const c of base){
-    if(isBundledVocabulary(c))map.set(c.id,c);
-    else if(c.id==='hsk-2-hsk3'){
-      const saved=stored.find(s=>s.id===c.id);
-      if(saved){
-        const lessons=new Map(c.lessons.map(l=>[l.number,l]));
-        for(const l of saved.lessons||[]){
-          const bundled=lessons.get(l.number);
-          // Refresh older bundled content; retain the user's imported course edits.
-          const merged=saved.builtIn&&bundled?{...l,...bundled,...(l.rawText?{rawText:l.rawText}:{})}:{...bundled,...l};
-          lessons.set(l.number,merged);
-        }
-        map.set(c.id,{...c,...saved,builtIn:saved.builtIn===true,contentRevision:c.contentRevision,verificationNote:c.verificationNote,documents:{...c.documents,...saved.documents},lessons:[...lessons.values()].sort((a,b)=>a.number-b.number)});
-      }
-    }
+  const map=new Map(base.map(c=>[c.id,c]));
+  for(const saved of stored){
+    const bundled=base.find(c=>c.id===saved.id);
+    if(isBundledVocabulary(bundled))continue;
+    let merged=mergeCourse(map.get(saved.id),saved);
+    if(bundled&&saved.builtIn===true)merged=mergeCourse(merged,bundled);
+    if(bundled)merged={...merged,builtIn:saved.builtIn===true,...(bundled.verificationNote?{verificationNote:bundled.verificationNote,contentRevision:bundled.contentRevision}:{})};
+    map.set(saved.id,merged);
   }
   return [...map.values()];
 }

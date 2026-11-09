@@ -31,11 +31,7 @@ export function detectLessons(pages){
  }
  return starts.map((s,i)=>({...s,end:starts[i+1]?starts[i+1].start-1:pages.length,rawText:pages.slice(s.start-1,starts[i+1]?starts[i+1].start-1:pages.length).join('\n\n')}));
 }
-export function mergeCourse(old,incoming){
- if(!old)return incoming;
- const oldLessons=new Map(old.lessons.map(l=>[l.number,l]));
- return {...old,...incoming,documents:{...old.documents,...incoming.documents},lessons:incoming.lessons.map(l=>{const p=oldLessons.get(l.number);return p?{...p,...l,words:l.words?.length?l.words:p.words||[],grammar:l.grammar?.length?l.grammar:p.grammar||[]}:l})};
-}
+export {mergeCourse,mergeWords} from './course-merge.js';
 export function parseWordLines(input){
  const lines=input.trim().split(/\n/).filter(Boolean);return lines.map((line,i)=>{const a=line.split('\t').map(x=>x.trim());if(a.length<3||!a[0]||!a[2])throw Error('Dòng '+(i+1)+': cần Chữ Hán, Pinyin, Nghĩa, ngăn bằng phím Tab.');return {h:a[0].slice(0,80),p:a[1].slice(0,180),v:a[2].slice(0,300),ex:(a[3]||'').slice(0,500),ev:(a[4]||'').slice(0,600)}});
 }

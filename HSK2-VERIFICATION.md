@@ -47,3 +47,9 @@ Added 29 literal image crops: 14 dialogue illustrations and 15 warm-up groups. L
 Course-scoped figure selection preserves all legacy HSK1 images and prevents the HSK2 images appearing in unrelated vocabulary courses. Each HSK2 lesson has its own cover image and a zoomable lesson gallery. A source-page reader button appears only when a textbook document is actually available in that course.
 
 Verification note in the course now acknowledges the supplied original PDF, while continuing to distinguish original book images from Hǎo's explanatory examples and translations.
+
+## Additive update policy — 2026-11-09
+
+Per the user’s explicit direction, adding or updating HSK2 must retain HSK1 and all existing levels. Partial imports now union lesson numbers, vocabulary, grammar and audio rather than replacing complete arrays. New PDFs are retained as supplementary reader choices while the original primary document remains available. Repeated imports are idempotent. Bundled course restoration and incoming non-deleted sync records use the same additive merge; an incomplete device catalog no longer infers course/lesson deletion records. Explicit user deletions remain distinct from updates.
+
+The policy is recorded in `AGENTS.md`, enforced by regression checks, and included in CI. Existing HSK1 JSON, 18 figure assets, book images, audio catalog and account/progress keys are not edited by this update.
