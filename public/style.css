@@ -33,3 +33,5 @@ p,nav button,.lessonrow small,.figure-panel figcaption{color:#586a84}
 @media(max-width:650px){.lessonrow b{font-size:14px}.lessonrow small{font-size:12px}.tabs button{font-size:12px}.word b{font-size:14px}.word .pin,.word .example{font-size:13px}}
 /* Contain animated/decorative overflow without hiding intentional inner table/nav scrolling. */
 @media(max-width:650px){#view{overflow-x:clip;min-width:0}.lessonrow>div:nth-child(2){min-width:0;flex:1}.lessonrow b,.lessonrow small{overflow-wrap:anywhere}}
+
+.lesson-figures{display:grid;gap:18px;min-width:0;align-content:start}.lesson-figures .figure-panel{margin:0}.lesson-figures .figure-image{display:block;width:100%}.lesson-figures .figure-image img{display:block;width:100%;height:auto;max-height:420px;object-fit:contain}.lesson-figures figcaption{font-size:12px;line-height:1.7;color:#586a84}

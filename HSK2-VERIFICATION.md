@@ -35,3 +35,15 @@ Audio source: https://www.baulchino.com/new-hsk-audios-2026 (HSK 2 textbook/work
 Logo: the supplied `Logo hǎo.pdf` contains one embedded raster image. `hao-logo.svg` and `hao-icon.svg` wrap crops of that exact artwork, retaining the navy/gold wordmark, icon and tagline; they are not a newly invented logo or a claim of vector reconstruction.
 
 Applied the supplied interface review: mobile lessons become a one-column list, stats use two columns with a wide final card, secondary text is larger/darker, horizontal navigation has a swipe cue, quiz answers have clearer borders and raised states, flashcard Chinese is larger, an empty mistake notebook links to practice, and dictionary rows alternate background color. Cards use restrained depth and hover motion with reduced-motion support. Existing level tiles and generous touch controls remain. Lesson pronunciation buttons also use 48px targets and 24px speaker icons.
+
+## Subsequent source-image update — 2026-11-09
+
+The user subsequently supplied `GTRINH HSK2 (1).z01` and `.z02`. The complete first entry `GTRINH HSK2/hsk-course-2.PDF` could be recovered from `.z01` without the missing final ZIP directory. Raw-deflate end-of-stream, descriptor CRC32 `fb6009f2`, compressed length and uncompressed length were verified. Recovered PDF: 31,351,618 bytes, 164 pages, SHA-256 `7ac520a38e8d75dd4df5664b904ed93f70cb2dab23afa499daa56146dfdb508d`.
+
+All 15 supplied lesson starts were checked against the PDF: PDF pages 17, 26, 35, 45, 53, 62, 72, 80, 89, 100, 109, 118, 128, 137, 146. Printed page = PDF page minus 16. This verifies lesson-start and image placement, not every original word/grammar statement.
+
+Added 29 literal image crops: 14 dialogue illustrations and 15 warm-up groups. Lesson13 uses its warm-up group as its primary figure because the first dialogue pages have no comparable scene photo. Every crop was visually inspected; partial question text around several photos was removed. Manifest `public/data/hsk-2-figures.json` records exact PDF-point crop rectangles, source hash, page references, dimensions and descriptive alt text. Source photos were not AI-generated or reconstructed. Crops are encoded as WebP; the full textbook PDF is not committed or published.
+
+Course-scoped figure selection preserves all legacy HSK1 images and prevents the HSK2 images appearing in unrelated vocabulary courses. Each HSK2 lesson has its own cover image and a zoomable lesson gallery. A source-page reader button appears only when a textbook document is actually available in that course.
+
+Verification note in the course now acknowledges the supplied original PDF, while continuing to distinguish original book images from Hǎo's explanatory examples and translations.
