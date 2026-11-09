@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFile} from 'node:fs/promises';
 import {newId,normalizeQuestionBank,validLabEntry,scheduleReview,cardsFromReviews,reviewQueue,cardKey,dayKey,streakInfo,createQuestions,finishAttempt,mistakeBook,segmentText,coverage,mergeLab,validatedLab,DAY} from '../public/study-model.js';
-import {courseReadings} from '../public/reading-library.js';
+import {courseReadings,readings} from '../public/reading-library.js';
+import {createStudyLab} from '../public/study-lab.js';
 import {localProjection,mergeRecordSets,applyRecords,changedRecords} from '../public/sync-model.js';
 import {normalizeCourse} from '../public/engine.js';
 import {initialize} from '../lib/standalone-store.mjs';
@@ -147,4 +148,16 @@ test('review IDs remain unique in browsers without randomUUID',()=>{
 test('reading tools also use supplied examples from each imported level without inventing translations',()=>{
  const course={id:'hsk-4-hsk3',name:'Giáo trình của tôi',lessons:[{number:2,title:'Bài gốc',grammar:[{h:'我在学校。',p:'Wǒ zài xuéxiào.',v:'Tôi ở trường.'}]}]};
  const items=courseReadings(course);assert.equal(items[0].id,'hsk-4-hsk3:reading:2');assert.deepEqual(items[0].sentences,[{h:'我在学校。',p:'Wǒ zài xuéxiào.',vi:'Tôi ở trường.'}]);assert.equal(items[0].source,course.name);
+});
+
+
+test('imported titles, source text and restored goal values cannot inject HTML into learning pages',()=>{
+ const originalStory=readings[0],previousWindow=globalThis.window,bad='<img src=x onerror="throw 1">';
+ try{globalThis.window={speechSynthesis:{}};readings[0]={...originalStory,title:bad,source:bad};
+ const course={id:'hsk-1',name:'Test',lessons:[{number:1,vi:bad,grammar:[{h:'你好',p:'nǐ hǎo',v:'xin chào'}]}]};
+ const state={id:'main',known:{},days:[],custom:[],lab:{setting:{goal:{daily:bad}}}};
+ const ui=createStudyLab({state:()=>state,course:()=>course,courses:()=>[course],page:()=> 'reading'});
+ const reading=ui.html('reading');assert.equal(reading.includes('<img src=x'),false);assert.ok(reading.includes('&lt;img'));
+ const progress=ui.html('progress');assert.equal(progress.includes('<img src=x'),false);assert.ok(progress.includes('value="10"'));state.lab.setting.goal={daily:{toString:'bad'},target:{toString:'bad'}};assert.doesNotThrow(()=>ui.html('progress'));
+ }finally{readings[0]=originalStory;if(previousWindow===undefined)delete globalThis.window;else globalThis.window=previousWindow;}
 });
