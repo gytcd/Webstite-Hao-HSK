@@ -85,7 +85,7 @@ test('production Worker verifies identity, uses native D1 and calls Gemini throu
   const modules=await Promise.all(paths.map(async path=>({type:'ESModule',path,contents:await readFile(new URL('../'+path,import.meta.url),'utf8')})));
   const config=JSON.parse(await readFile(new URL('../wrangler.jsonc',import.meta.url),'utf8'));
   const feedback={reply:'你好！',pinyin:'Nǐ hǎo!',translation:'Xin chào!',corrected:'你好！',explanation:'Lời chào thông dụng.',issues:[],score:0,scoreNote:''};
-  let modelCalls=0,assets=0;
+  let modelCalls=0,metadataCalls=0,assets=0,providerError=false;
   const mf=new Miniflare({
     compatibilityDate:config.compatibility_date,
     modules:[{type:'ESModule',path:'main.mjs',contents:"export {default} from './worker/standalone.mjs';"},...modules],
@@ -94,6 +94,10 @@ test('production Worker verifies identity, uses native D1 and calls Gemini throu
     serviceBindings:{ASSETS:()=>{assets++;return new RuntimeResponse('private asset');}},
     outboundService:request=>{
       if(request.url==='https://'+settings.ACCESS_TEAM_DOMAIN+'/cdn-cgi/access/certs')return RuntimeResponse.json({keys:[jwk]});
+      if(request.url==='https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash'){
+        metadataCalls++;assert.equal(request.headers.get('x-goog-api-key'),'runtime-test-key');
+        return providerError ? RuntimeResponse.json({error:{code:403,status:'PERMISSION_DENIED',message:'private runtime-test-key',details:[{reason:'API_KEY_HTTP_REFERRER_BLOCKED'}]}},{status:403}) : RuntimeResponse.json({name:'models/gemini-3.8-flash'});
+      }
       assert.equal(request.url,'https://generativelanguage.googleapis.com/v1beta/interactions');
       assert.equal(request.headers.get('x-goog-api-key'),'runtime-test-key');modelCalls++;
       return RuntimeResponse.json({status:'completed',steps:[{type:'model_output',content:[{type:'text',text:JSON.stringify(feedback)}]}]});
@@ -106,6 +110,10 @@ test('production Worker verifies identity, uses native D1 and calls Gemini throu
     const response=await mf.dispatchFetch('https://hao.test/api/ai',{method:'POST',headers:{...headers,origin:'https://hao.test','content-type':'application/json','x-hao-ai':'1'},body:JSON.stringify({mode:'grammar',text:'你好'})});
     const result=await response.json();assert.equal(response.status,200,JSON.stringify(result));assert.equal(result.result.reply,feedback.reply);assert.equal(modelCalls,1);
     const configResult=await(await mf.dispatchFetch('https://hao.test/api/ai',{headers})).json();assert.equal(configResult.used,1);assert.equal(JSON.stringify(configResult).includes('runtime-test-key'),false);
+    const checkHeaders={...headers,'x-hao-ai':'1'};
+    const checked=await(await mf.dispatchFetch('https://hao.test/api/ai?check=1',{headers:checkHeaders})).json();assert.equal(checked.keyVerified,true);assert.equal(checked.used,1);assert.equal(metadataCalls,1);assert.equal(modelCalls,1);
+    providerError=true;
+    const rejected=await mf.dispatchFetch('https://hao.test/api/ai?check=1',{headers:checkHeaders});const diagnosis=await rejected.json();assert.equal(rejected.status,502);assert.equal(diagnosis.code,'AI_KEY_RESTRICTED');assert.equal(diagnosis.providerStatus,403);assert.equal(JSON.stringify(diagnosis).includes('runtime-test-key'),false);
     const review={id:'runtime-review',card:'hsk-1:你',courseId:'hsk-1',word:'你',grade:3,at:Date.now()};
     const record={key:'lab:review:runtime-review',value:review,stamp:Date.now(),actor:'runtime_device',deleted:false};
     const saved=await mf.dispatchFetch('https://hao.test/api/sync?v=2',{method:'POST',headers:{...headers,origin:'https://hao.test','content-type':'application/json'},body:JSON.stringify({records:[record]})});assert.equal(saved.status,200);assert.equal((await saved.json()).records.length,1);

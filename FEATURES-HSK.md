@@ -31,7 +31,21 @@ Trong Cloudflare → Workers & Pages → `haohsk` → Settings → Variables and
 | `AI_DAILY_LIMIT` | Text, tùy chọn | Mặc định 15 lượt gửi/người/ngày |
 | `AI_GLOBAL_DAILY_LIMIT` | Text, tùy chọn | Mặc định 100 lượt gửi/ngày cho toàn website |
 
-Lưu/triển khai thay đổi trong Cloudflare, mở **Trợ lý Gemini → Kết nối** để kiểm tra. Khóa ở máy chủ, không nhập vào GitHub hay ô hội thoại của ứng dụng. Xem [hướng dẫn API key của Google](https://ai.google.dev/gemini-api/docs/api-key).
+Lưu/triển khai thay đổi trong Cloudflare, mở **Trợ lý Gemini → Kiểm tra kết nối**. Nút này dùng khóa ở máy chủ để đọc metadata của model từ Google, không gửi câu của người học và không tạo câu trả lời AI. Có khóa chỉ hiển thị **Đã lưu khóa Gemini**; Google chấp nhận yêu cầu kiểm tra mới hiển thị **Google đã chấp nhận khóa**. Sau đó gửi một câu để kiểm tra phản hồi thực tế. Khóa ở máy chủ, không nhập vào GitHub hay ô hội thoại của ứng dụng. Xem [hướng dẫn API key của Google](https://ai.google.dev/gemini-api/docs/api-key).
+
+Nếu thất bại, sao chép **Mã kiểm tra** trong ô thông báo, không gửi khóa. Mã có thể kèm HTTP status và mã Google đã được lọc; thông điệp thô của Google không được đưa về trình duyệt vì có thể chứa thông tin riêng.
+
+| Mã | Hành động |
+|---|---|
+| `AI_KEY_INVALID` | Kiểm tra khóa còn hiệu lực và Secret `GEMINI_API_KEY` |
+| `AI_KEY_RESTRICTED`, `AI_PERMISSION_DENIED` | Kiểm tra quyền Gemini API, giới hạn website/IP và quyền dùng model của dự án |
+| `AI_MODEL_UNAVAILABLE` | Kiểm tra tên `GEMINI_MODEL` và model được dự án hỗ trợ; cần hỗ trợ Interactions và structured JSON |
+| `AI_PROVIDER_QUOTA` | Xem Usage và Rate limits của Google; đây là hạn mức khác với 15 lượt/ngày trong Hǎo |
+| `AI_BILLING_REQUIRED`, `AI_PROJECT_PRECONDITION` | Kiểm tra điều kiện dự án, trạng thái thanh toán và khu vực tại Google AI Studio |
+| `AI_REQUEST_REJECTED` | Gửi mã cho người quản lý để sửa cấu trúc/tham số gọi API |
+| `AI_CONNECTION_FAILED`, `AI_PROVIDER_UNAVAILABLE` | Kiểm tra lại sau; dịch vụ hoặc kết nối đang chưa sẵn sàng |
+
+Nguồn mã lỗi: [Google Interactions API errors](https://ai.google.dev/gemini-api/docs/api-errors). Khóa mới trong Google AI Studio có thể chưa được cấp quyền dùng mọi model; lưu khóa thành công trong Cloudflare không xác nhận hạn mức hay quyền sử dụng của Google.
 
 Ứng dụng gửi REST tới Interactions API, đặt `store: false`, giới hạn độ dài, xác minh cấu trúc JSON trả về và từ chối kết quả chưa hoàn chỉnh. `store: false` không phải cam kết không dùng dữ liệu để huấn luyện. [Điều khoản Gemini](https://ai.google.dev/gemini-api/terms) phân biệt dịch vụ miễn phí và trả phí; nội dung gửi qua dịch vụ miễn phí có thể được dùng để cải thiện sản phẩm. Giao diện yêu cầu người học đồng ý gửi nội dung trước khi gọi API.
 

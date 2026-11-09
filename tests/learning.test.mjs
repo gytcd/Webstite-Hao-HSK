@@ -105,6 +105,55 @@ test('incomplete, oversized and malformed AI feedback is not treated as a valid 
   assert.throws(()=>parseAIOutput({status:'completed',steps:[]}));
   assert.throws(()=>parseAIOutput({status:'completed',steps:[{type:'model_output',content:[{type:'text',text:JSON.stringify({...feedback,score:500})}]}]}));
 });
+test('connection checks verify Google model access without sending learner text or consuming study quota',async()=>{
+  const db=database();await initialize(db);const env={DB:db,GEMINI_API_KEY:'private-key',GEMINI_MODEL:'models/gemini-3.8-flash'};let calls=0;
+  const fetcher=async(url,options)=>{calls++;assert.equal(url,'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash');assert.equal(options.headers['x-goog-api-key'],'private-key');assert.equal(options.redirect,'manual');assert.equal(options.body,undefined);return Response.json({name:'models/gemini-3.8-flash'});};
+  const stored=await(await aiHandler(new Request('https://hao.test/api/ai'),env,user,{fetcher})).json();assert.equal(stored.configured,true);assert.equal(stored.keyVerified,undefined);assert.equal(calls,0);
+  assert.equal((await aiHandler(new Request('https://hao.test/api/ai?check=1',{headers:{origin:'https://evil.test','x-hao-ai':'1'}}),env,user,{fetcher})).status,403);
+  assert.equal((await aiHandler(new Request('https://hao.test/api/ai?check=1'),env,user,{fetcher})).status,403);
+  const checked=await(await aiHandler(new Request('https://hao.test/api/ai?check=1',{headers:{'x-hao-ai':'1'}}),env,user,{fetcher})).json();assert.equal(checked.keyVerified,true);assert.equal(checked.used,0);assert.equal(calls,1);assert.equal(JSON.stringify(checked).includes('private-key'),false);assert.equal(db.sql.prepare('SELECT COUNT(*) AS n FROM hao_ai_usage').get().n,0);db.sql.close();
+});
+test('Google failures distinguish credentials, model access, payment, quota and request errors without exposing echoed secrets',async()=>{
+  const cases=[
+    [400,{status:'INVALID_ARGUMENT',details:[{reason:'API_KEY_INVALID'}]},'AI_KEY_INVALID'],
+    [401,{code:'authentication'},'AI_KEY_INVALID'],
+    [403,{status:'PERMISSION_DENIED',details:[{reason:'API_KEY_HTTP_REFERRER_BLOCKED'}]},'AI_KEY_RESTRICTED'],
+    [403,{code:'permission_denied'},'AI_PERMISSION_DENIED'],
+    [404,{code:'model_not_found'},'AI_MODEL_UNAVAILABLE'],
+    [402,{code:'payment_required'},'AI_BILLING_REQUIRED'],
+    [400,{code:'failed_precondition'},'AI_PROJECT_PRECONDITION'],
+    [429,{code:'quota_exceeded'},'AI_PROVIDER_QUOTA'],
+    [400,{code:'parameter_unknown',param:'thinking_level'},'AI_REQUEST_REJECTED'],
+    [503,{code:'service_unavailable'},'AI_PROVIDER_UNAVAILABLE']
+  ];
+  const db=database();await initialize(db);const env={DB:db,GEMINI_API_KEY:'do-not-expose-this-key'};
+  for(let i=0;i<cases.length;i++){
+    const [status,error,code]=cases[i];
+    const response=await aiHandler(post('/api/ai',{mode:'grammar',text:'私人内容'},{'x-hao-ai':'1'}),env,{...user,userId:'failure-'+i},{fetcher:async()=>Response.json({error:{...error,message:'私人内容 do-not-expose-this-key'}},{status})});
+    const data=await response.json();assert.equal(data.code,code);assert.equal(data.providerStatus,status);assert.equal(JSON.stringify(data).includes('do-not-expose-this-key'),false);assert.equal(JSON.stringify(data).includes('私人内容'),false);if(error.param)assert.equal(data.parameter,error.param);
+  }
+  db.sql.close();
+});
+test('failed or malformed connection checks never report a verified key or call an arbitrary model URL',async()=>{
+  const db=database();await initialize(db);const env={DB:db,GEMINI_API_KEY:'test-key'},request=()=>new Request('https://hao.test/api/ai?check=1',{headers:{'x-hao-ai':'1'}});
+  for(const fetcher of [async()=>{throw Error('private connection detail');},async()=>Response.json({name:'models/other'})]){
+    const result=await aiHandler(request(),env,user,{fetcher});const data=await result.json();assert.equal(result.status,502);assert.equal(data.code,'AI_CONNECTION_FAILED');assert.equal(data.keyVerified,undefined);assert.equal(JSON.stringify(data).includes('private connection detail'),false);
+  }
+  const rejected=await aiHandler(request(),{...env,GEMINI_MODEL:'https://untrusted.test/'},user,{fetcher:async()=>{throw Error('must not fetch');}});assert.equal(rejected.status,503);assert.equal((await rejected.json()).code,'AI_MODEL_CONFIG');db.sql.close();
+});
+test('tutor UI verifies status only after Google accepts a check, displays diagnostic codes and preserves the draft',async()=>{
+  const previous={window:globalThis.window,document:globalThis.document,fetch:globalThis.fetch};const handlers={},requests=[];
+  const elements=new Map(['aiRefresh','aiText','aiConsent','aiForm'].map(id=>[id,{addEventListener:(event,fn)=>handlers[id+':'+event]=fn}]));
+  try{
+    globalThis.window={speechSynthesis:{}};globalThis.document={getElementById:id=>elements.get(id),querySelectorAll:()=>[]};
+    globalThis.fetch=async(path,options)=>{requests.push({path,options});if(path==='/api/ai?check=1')return Response.json({configured:true,keyVerified:true,model:'gemini-3.8-flash',used:0,limit:15});if(options.method==='POST')return Response.json({error:'Google từ chối model.',code:'AI_MODEL_UNAVAILABLE',providerStatus:404,providerCode:'MODEL_NOT_FOUND'},{status:502});return Response.json({configured:true,model:'gemini-3.8-flash',used:0,limit:15});};
+    const course={id:'hsk-1',level:['1'],lessons:[]},state={known:{},days:[],custom:[]};const ui=createStudyLab({state:()=>state,course:()=>course,courses:()=>[course],page:()=> 'tutor',render:()=>{},touch:async()=>{},toast:()=>{}});
+    ui.bind('tutor');await new Promise(resolve=>setTimeout(resolve,0));assert.match(ui.html('tutor'),/Đã lưu khóa Gemini; chưa xác minh/);assert.doesNotMatch(ui.html('tutor'),/Đã kết nối Gemini/);
+    await handlers['aiRefresh:click']();assert.match(ui.html('tutor'),/Google đã chấp nhận khóa/);assert.equal(requests.at(-1).path,'/api/ai?check=1');assert.equal(requests.at(-1).options.headers['x-hao-ai'],'1');
+    handlers['aiText:input']({target:{value:'你好'}});handlers['aiConsent:change']({target:{checked:true}});await handlers['aiForm:submit']({preventDefault(){}});
+    const html=ui.html('tutor');assert.match(html,/AI_MODEL_UNAVAILABLE · HTTP 404 · MODEL_NOT_FOUND/);assert.match(html,/>你好<\/textarea>/);assert.doesNotMatch(html,/Google đã chấp nhận khóa/);
+  }finally{for(const [key,value] of Object.entries(previous)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
+});
 test('email reminders require configuration and opt-in and always use the verified recipient',async()=>{
   const db=database();await initialize(db);const now=Date.parse('2026-11-08T14:00:00Z');
   assert.deepEqual(await sendReminders({DB:db},now),{sent:0,disabled:true});
