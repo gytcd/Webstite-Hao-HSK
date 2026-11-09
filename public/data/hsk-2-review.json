@@ -1,0 +1,105 @@
+{
+  "reviewedOn": "2026-11-09",
+  "inputSHA256": "c4193e0ee0fbc6995fb06c3dfcb15aea093353a2b545bf2c3411df19d48c126a",
+  "scope": "Internal language and structural review; no original textbook PDF supplied.",
+  "changes": [
+    {
+      "lesson": 2,
+      "grammar": 2,
+      "field": "explanation",
+      "before": "Thêm 多 sau số từ để nói “hơn, nhiều hơn con số đó một chút”. Nếu số là số tròn chục, tròn trăm… thì 多 đặt ngay sau số từ: 二十多个人, 一百多本书. Nếu số không tròn và có lượng từ thì 多 đặt sau lượng từ: 三个多小时, 五块多钱.",
+      "after": "Thêm 多 để nói số lượng nhiều hơn một mốc. Với số tròn chục, tròn trăm…, 多 đứng ngay sau số: 二十多个人, 一百多本书. Với đơn vị đo có thể chia nhỏ, 多 có thể đứng sau đơn vị: 三个多小时 (hơn ba giờ), 五块多钱 (hơn năm tệ). Không áp dụng máy móc mẫu này cho người hoặc vật đếm nguyên: không nói 三个多人 để chỉ hơn ba người."
+    },
+    {
+      "lesson": 3,
+      "grammar": 3,
+      "field": "explanation",
+      "before": "Khi nói về hành động đã xảy ra, động từ một âm tiết lặp lại thành A了A (看了看, 想了想). Động từ hai âm tiết thường không lặp lại mà dùng 了一下 (介绍了一下). Với từ li hợp (động từ + tân ngữ gộp sẵn như 洗手, 散步), lặp phần động từ: AAB (洗洗手, 散散步).",
+      "after": "Khi nói về hành động đã xảy ra, động từ một âm tiết có thể lặp thành A了A (看了看, 想了想). Một số động từ hai âm tiết có dạng AB了AB, như 讨论了讨论; cũng có thể dùng AB了一下, như 介绍了一下. Với từ li hợp như 洗手, 散步, có thể lặp phần động từ: AAB (洗洗手, 散散步). Dạng lặp phụ thuộc ý nghĩa và ngữ cảnh, không dùng với mọi động từ."
+    },
+    {
+      "lesson": 4,
+      "grammar": 1,
+      "field": "explanation",
+      "before": "Đặt 过 sau động từ để nói một việc đã xảy ra trong quá khứ và không còn tiếp diễn đến hiện tại, thường là kinh nghiệm “đã từng”. Cấu trúc: Chủ ngữ + động từ + 过 + tân ngữ. Phủ định thêm 没(有) trước động từ (giữ 过): 我没去过。 Câu hỏi: …过…吗？, …过…没有？ hoặc 去没去过？",
+      "after": "Đặt 过 sau động từ để nhấn mạnh kinh nghiệm đã từng trải qua: chủ ngữ + động từ + 过 + tân ngữ. Mẫu này không tự khẳng định rằng hiện tại người đó không còn làm việc ấy. Phủ định thêm 没(有) trước động từ và giữ 过: 我没去过。 Câu hỏi: …过…吗？, …过…没有？ hoặc 去没去过？"
+    },
+    {
+      "lesson": 4,
+      "grammar": 2,
+      "field": "explanation",
+      "before": "Vế đầu nêu nguyên nhân (因为), vế sau nêu kết quả (所以). Hai từ có thể dùng thành cặp hoặc dùng riêng từng từ, khác với tiếng Việt “vì… nên…” ở chỗ tiếng Trung thường dùng cả hai. Nếu có chủ ngữ khác nhau, mỗi vế có chủ ngữ riêng.",
+      "after": "因为 nêu nguyên nhân, 所以 nêu kết quả, tương tự “vì… nên…” trong tiếng Việt. Hai từ có thể dùng thành cặp hoặc lược một từ khi ngữ cảnh đã rõ. Nếu hai vế có chủ ngữ khác nhau, mỗi vế có chủ ngữ riêng."
+    },
+    {
+      "lesson": 5,
+      "grammar": 2,
+      "field": "explanation",
+      "before": "Các động từ xu hướng 上, 下, 进, 出, 回, 过 đặt sau động từ chính để chỉ hướng đi lên, đi xuống, vào, ra, về, qua. Sau chúng thường có tân ngữ chỉ nơi chốn: 走进教室, 跑上楼, 回家. Có thể thêm 来/去 ở cuối để chỉ rõ hướng so với người nói: 走进教室来, 跑上楼去.",
+      "after": "Các động từ xu hướng 上, 下, 进, 出, 回, 过 đặt sau động từ chính để chỉ hướng đi lên, đi xuống, vào, ra, về, qua. Sau chúng thường có tân ngữ chỉ nơi chốn: 走进教室, 跑上楼, 走回家. Có thể thêm 来/去 ở cuối để chỉ rõ hướng so với người nói: 走进教室来, 跑上楼去."
+    },
+    {
+      "lesson": 7,
+      "grammar": 3,
+      "field": "explanation",
+      "before": "Khi động từ có tân ngữ hoặc là từ li hợp (như 跳舞, 唱歌), phải lặp lại động từ: chủ ngữ + động từ + tân ngữ + động từ + 得 + tính từ. Hoặc đưa tân ngữ lên trước câu và chỉ dùng một lần động từ: 足球他踢得很好.",
+      "after": "Khi động từ có tân ngữ và bổ ngữ với 得, có thể lặp động từ: chủ ngữ + động từ + tân ngữ + động từ + 得 + tính từ, như 他踢足球踢得很好. Cũng có thể đưa tân ngữ làm đề ngữ và dùng động từ một lần: 他篮球打得很好 / 篮球他打得很好. Không bắt buộc lặp động từ trong mọi cách nói."
+    },
+    {
+      "lesson": 8,
+      "grammar": 3,
+      "field": "explanation",
+      "before": "虽然 nêu một sự thật, 但是 nêu ý trái ngược hoặc điều đáng chú ý hơn: “tuy… nhưng…”. 虽然 có thể đứng trước hoặc sau chủ ngữ của vế đầu. Vế sau thường dùng 但是 (khẩu ngữ có thể dùng 可是, 但). Khác với tiếng Việt, tiếng Trung thường dùng cả hai từ trong cùng một câu.",
+      "after": "虽然 nêu một sự thật, 但是 nêu ý trái ngược hoặc điều đáng chú ý hơn, tương tự “tuy… nhưng…” trong tiếng Việt. 虽然 có thể đứng trước hoặc sau chủ ngữ vế đầu. Vế sau thường dùng 但是, 可是 hoặc 但. Có thể dùng cả cặp hoặc lược một từ tùy ngữ cảnh."
+    },
+    {
+      "lesson": 12,
+      "grammar": 2,
+      "field": "explanation",
+      "before": "Khi câu có động từ kèm bổ ngữ trạng thái, 比 có thể đặt trước động từ hoặc đặt sau động từ (trước phần 得 + tính từ): 她比我起得早 / 她起得比我早. Hai cách nói nghĩa như nhau.",
+      "after": "Với động từ có bổ ngữ trạng thái, có hai vị trí thường gặp: chủ ngữ + 比 + đối tượng so sánh + động từ + 得 + tính từ (她比我起得早); hoặc chủ ngữ + động từ + 得 + 比 + đối tượng so sánh + tính từ (她起得比我早). Ở mẫu sau, 比 đứng sau 得, bên trong phần bổ ngữ. Hai câu đều nói cô ấy dậy sớm hơn tôi."
+    },
+    {
+      "lesson": 14,
+      "grammar": 3,
+      "field": "explanation",
+      "before": "Bổ ngữ xu hướng kép gồm 上, 下, 进, 出, 回, 过, 起 kết hợp với 来 hoặc 去: 走出来, 跑进去, 站起来, 拿回来. Khi có tân ngữ: tân ngữ nơi chốn đặt trước 来/去 (走进教室来); tân ngữ chỉ vật có thể đặt trước hoặc sau 来/去 (拿出一本书来 / 拿出来一本书).",
+      "after": "Bổ ngữ xu hướng kép thường gồm 上、下、进、出、回、过 kết hợp với 来 hoặc 去: 走出来, 跑进去, 拿回来. Riêng 起 kết hợp với 来 thành 起来, như 站起来; không tạo 起去 trong hệ bổ ngữ này. Tân ngữ nơi chốn đặt trước 来/去 (走进教室来). Tân ngữ chỉ vật có thể có các vị trí khác nhau tùy câu, như 拿出一本书来 / 拿出来一本书."
+    },
+    {
+      "lesson": 9,
+      "grammar": 2,
+      "field": "title",
+      "before": "Động từ 离: chỉ khoảng cách",
+      "after": "Từ 离: chỉ khoảng cách"
+    },
+    {
+      "lesson": 8,
+      "word": "花",
+      "field": "ev",
+      "before": "Hôm nay tôi tiêu một trăm đồng.",
+      "after": "Hôm nay tôi tiêu một trăm tệ."
+    },
+    {
+      "lesson": 12,
+      "word": "晴",
+      "field": "ex",
+      "before": "今天天很晴，我们出去玩吧。",
+      "after": "今天是晴天，我们出去玩吧。"
+    },
+    {
+      "lesson": 12,
+      "word": "晴",
+      "field": "ep",
+      "before": "Jīntiān tiān hěn qíng, wǒmen chūqù wán ba.",
+      "after": "Jīntiān shì qíngtiān, wǒmen chūqù wán ba."
+    },
+    {
+      "lesson": 12,
+      "word": "晴",
+      "field": "ev",
+      "before": "Hôm nay trời rất quang, chúng ta ra ngoài chơi đi.",
+      "after": "Hôm nay trời nắng, chúng ta ra ngoài chơi đi."
+    }
+  ]
+}

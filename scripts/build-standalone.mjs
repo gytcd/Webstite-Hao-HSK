@@ -16,7 +16,7 @@ await mkdir(new URL('strokes/',output),{recursive:true});
 await cp(new URL('../node_modules/hanzi-writer/dist/index.esm.js',import.meta.url),new URL('vendor/hanzi-writer.js',output));
 await cp(new URL('../node_modules/hanzi-writer/LICENSE',import.meta.url),new URL('licenses/hanzi-writer-MIT.txt',output));
 await cp(new URL('../node_modules/hanzi-writer-data/ARPHICPL.TXT',import.meta.url),new URL('licenses/ARPHICPL.TXT',output));
-const built = JSON.parse(await readFile(new URL('../public/data/hsk-1.json',import.meta.url),'utf8'));
+const built = {lessons:(await Promise.all(['hsk-1','hsk-2'].map(async id=>JSON.parse(await readFile(new URL('../public/data/'+id+'.json',import.meta.url),'utf8'))))).flatMap(c=>c.lessons)};
 const text = built.lessons.flatMap(l=>(l.words||[]).map(w=>w.h)).join('')+readings.flatMap(r=>r.sentences.map(s=>s.h)).join('');
 const characters = [...new Set([...text].filter(c=>/^\p{Script=Han}$/u.test(c)))];
 const bundled = [];
