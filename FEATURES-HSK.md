@@ -115,3 +115,14 @@ npx --yes wrangler@4.92.0 deploy --dry-run
 ```
 
 `npm test` kiểm tra SRS, dữ liệu hai thiết bị, bộ đề, quota, nhắc học và chạy API bảo vệ cùng D1 trong runtime Workers. Các bài kiểm tra Gemini/Resend dùng phản hồi giả lập; gọi dịch vụ thật cần khóa của chủ website.
+
+
+## Kiểm tra lại từ sổ lỗi sai và pinyin HSK 1
+
+Sổ lỗi sai có nút **Làm bài kiểm tra lại**. Tab Cần ôn tạo bài từ các câu chưa được đánh dấu đã ôn; tab Tất cả cho phép luyện lại cả danh sách. Giữ nguyên câu hỏi, nguồn, lời giải và đáp án đúng; đảo thứ tự câu/lựa chọn, lưu bài làm theo cơ chế hiện có. Tối đa 120 câu và giới hạn kích thước an toàn mỗi lượt; các câu còn lại vẫn được giữ. Cần hoàn thành bài đang làm trước khi tạo lượt mới.
+
+Khi chấm bài kiểm tra lại, câu đúng chuyển sang Đã ôn, câu sai hoặc bỏ trống tiếp tục ở Cần ôn. Lịch sử bài gốc và mọi câu sai vẫn có trong Tất cả. Hoàn tất do hết giờ áp dụng cùng cơ chế. Không sửa dữ liệu giáo trình, tài khoản hoặc tiến độ cũ.
+
+Trong phần luyện đề HSK1, chữ Hán ở câu hỏi và các lựa chọn có pinyin bên dưới. Pinyin lấy từ mục từ đã có hoặc metadata đi cùng câu hỏi; các câu đang lưu từ phiên bản cũ dùng từ điển của đúng giáo trình làm nguồn dự phòng. Không tạo pinyin cho tiếng Việt hoặc đoán cách đọc một câu chưa có trong nguồn. HSK2 trở lên giữ cách hiển thị hiện tại. Câu nghe tiếp tục dùng audio như trước.
+
+Kiểm tra: 53 bài test qua; kiểm tra trên trình duyệt việc hiển thị pinyin, tiếp tục bài sau tải lại, tạo bài từ 10 lỗi sai, chấm 1 câu đúng và giữ 9 câu cần ôn, đồng thời vẫn còn đủ 10 câu trong Tất cả.

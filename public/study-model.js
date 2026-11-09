@@ -76,7 +76,7 @@ export function createQuestions(words, {count = 20, listening = false, random = 
   return shuffle(pool, random).slice(0, Math.min(60, count)).map((w, i) => {
     const kind = listening && i % 3 === 0 ? 'listening' : i % 2 === 0 ? 'meaning' : 'hanzi';
     const options = shuffle([w, ...shuffle(pool.filter(x => x.v !== w.v && x.h !== w.h), random).slice(0,3)], random);
-    return {id: cardKey(w.courseId, w) + ':' + kind, card:cardKey(w.courseId,w), kind, word: w.h, pinyin: w.p || '', meaning: w.v, lesson: w.lesson || null, courseId: w.courseId, source: w.source || '', prompt: kind === 'hanzi' ? w.v : w.h, options: options.map(o => kind === 'hanzi' ? o.h : o.v), answer: options.findIndex(o => o.h === w.h)};
+    return {id: cardKey(w.courseId, w) + ':' + kind, card:cardKey(w.courseId,w), kind, word: w.h, pinyin: w.p || '', meaning: w.v, lesson: w.lesson || null, courseId: w.courseId, source: w.source || '', prompt: kind === 'hanzi' ? w.v : w.h, promptPinyin:kind==='meaning'?w.p||'':'', options: options.map(o => kind === 'hanzi' ? o.h : o.v), optionPinyin:options.map(o=>kind==='hanzi'?o.p||'':''), answer: options.findIndex(o => o.h === w.h)};
   });
 }
 export function finishAttempt(attempt, now = Date.now()) {
@@ -93,6 +93,36 @@ export function mistakeBook(attempts, resolved = {}) {
     }
   }
   return [...map.values()].map(q => ({...q, resolved: (resolved[q.id]?.at || 0) >= q.lastAt})).sort((a,b) => b.lastAt - a.lastAt);
+}
+export function createMistakeRetest(attempts,resolved={}, {now=Date.now(),id=newId(),includeResolved=false,random=Math.random}={}) {
+  const mistakes=mistakeBook(attempts,resolved).filter(q=>includeResolved||!q.resolved);
+  if(!mistakes.length)throw Error('Chưa có câu sai cần kiểm tra lại.');
+  const questions=[];
+  for(const mistake of shuffle(mistakes,random)){
+    const {chosen,correct,count,lastAt,resolved,...q}=mistake;
+    const order=shuffle(q.options.map((_,i)=>i),random);
+    const next={...q,options:order.map(i=>q.options[i]),answer:order.indexOf(q.answer)};
+    if(q.optionPinyin)next.optionPinyin=order.map(i=>q.optionPinyin[i]);
+    if(questions.length>=120||new TextEncoder().encode(JSON.stringify([...questions,next])).length>260000)continue;
+    questions.push(next);
+  }
+  if(!questions.length)throw Error('Các câu trong sổ quá dài để tạo một lượt kiểm tra.');
+  return {id,mode:'practice',retest:true,mistakeTotal:mistakes.length,status:'active',startedAt:now,deadline:now+Math.max(5,questions.length)*60000,questions,answers:questions.map(()=>null)};
+}
+export function resolveRetest(attempt,resolved={}) {
+  const result={...resolved};
+  if(attempt.retest&&attempt.status==='finished')for(const q of attempt.rows||[])if(q.correct&&(result[q.id]?.at||0)<=attempt.finishedAt)result[q.id]={at:attempt.finishedAt};
+  return result;
+}
+export function practicePinyin(question,courses,custom=[]) {
+  const course=courses.find(c=>c.id===question.courseId);
+  const level=course?String(course.level):/^hsk-1(?:$|-)/.test(question.courseId||'')?'1':'';
+  if(level!=='1')return {prompt:'',options:question.options.map(()=> '')};
+  const dictionary=new Map((course?allCourseWords(course,custom):[]).map(w=>[w.h,w.p||'']));
+  const hasHanzi=text=>/\p{Script=Han}/u.test(text||'');
+  const prompt=hasHanzi(question.prompt)?question.promptPinyin||(question.kind==='meaning'?question.pinyin:'')||dictionary.get(question.prompt)||'':'';
+  const options=question.options.map((v,i)=>hasHanzi(v)?question.optionPinyin?.[i]||dictionary.get(v)||'':'');
+  return {prompt,options};
 }
 export function segmentText(text, words) {
   const dictionary = new Map(words.filter(w => w.h).map(w => [w.h, w]));
@@ -133,14 +163,14 @@ export function normalizeQuestionBank(input,courseId) {
   if(new TextEncoder().encode(JSON.stringify(result)).length>300000)throw Error('Bộ đề quá dài; hãy chia thành các phần nhỏ hơn.');
   return result;
 }
-const validQuestion = q => q && typeof q.id==='string' && q.id.length<=250 && typeof q.word==='string' && q.word.length<=80 && typeof q.courseId==='string' && q.courseId.length<=60 && Array.isArray(q.options) && q.options.length>=2 && q.options.length<=6 && q.options.every(o=>typeof o==='string'&&o.length>0&&o.length<=300) && Number.isInteger(q.answer) && q.answer>=0 && q.answer<q.options.length;
+const validQuestion = q => q && typeof q.id==='string' && q.id.length<=250 && typeof q.word==='string' && q.word.length<=80 && typeof q.courseId==='string' && q.courseId.length<=60 && (q.promptPinyin===undefined||typeof q.promptPinyin==='string'&&q.promptPinyin.length<=600) && (q.optionPinyin===undefined||Array.isArray(q.optionPinyin)&&q.optionPinyin.length===q.options?.length&&q.optionPinyin.every(p=>typeof p==='string'&&p.length<=600)) && Array.isArray(q.options) && q.options.length>=2 && q.options.length<=6 && q.options.every(o=>typeof o==='string'&&o.length>0&&o.length<=300) && Number.isInteger(q.answer) && q.answer>=0 && q.answer<q.options.length;
 export function validLabEntry(kind, value) {
   if (!LAB_KINDS.includes(kind) || !value || typeof value !== 'object' || Array.isArray(value)) return false;
   const finite = n => Number.isSafeInteger(n) && n >= 0;
   const str = (s, max) => typeof s === 'string' && s.length > 0 && s.length <= max;
   if (new TextEncoder().encode(JSON.stringify(value)).length > 650000) return false;
   if (kind === 'review') return str(value.id,100) && str(value.card,200) && str(value.courseId,60) && str(value.word,80) && finite(value.at) && [0,2,3,4].includes(value.grade);
-  if (kind === 'attempt') return str(value.id,100) && ['active','finished'].includes(value.status) && ['practice','placement'].includes(value.mode) && finite(value.startedAt) && finite(value.deadline) && Array.isArray(value.questions) && value.questions.length > 0 && value.questions.length <= 120 && value.questions.every(validQuestion) && Array.isArray(value.answers) && value.answers.length <= 120 && value.answers.every(a=>a===null || Number.isInteger(a)&&a>=0&&a<6) && (value.status !== 'finished' || finite(value.finishedAt) && Array.isArray(value.rows) && value.rows.length === value.questions.length && Number.isSafeInteger(value.correct) && value.correct>=0 && value.correct<=value.questions.length && value.total===value.questions.length && Number.isSafeInteger(value.percent) && value.percent>=0 && value.percent<=100 && value.rows.every(q=>validQuestion(q)&&typeof q.correct==='boolean'&&(q.chosen===null||Number.isInteger(q.chosen)&&q.chosen>=0&&q.chosen<q.options.length)));
+  if (kind === 'attempt') return (value.retest===undefined||typeof value.retest==='boolean') && (value.mistakeTotal===undefined||finite(value.mistakeTotal)&&value.mistakeTotal>0) && str(value.id,100) && ['active','finished'].includes(value.status) && ['practice','placement'].includes(value.mode) && finite(value.startedAt) && finite(value.deadline) && Array.isArray(value.questions) && value.questions.length > 0 && value.questions.length <= 120 && value.questions.every(validQuestion) && Array.isArray(value.answers) && value.answers.length <= 120 && value.answers.every(a=>a===null || Number.isInteger(a)&&a>=0&&a<6) && (value.status !== 'finished' || finite(value.finishedAt) && Array.isArray(value.rows) && value.rows.length === value.questions.length && Number.isSafeInteger(value.correct) && value.correct>=0 && value.correct<=value.questions.length && value.total===value.questions.length && Number.isSafeInteger(value.percent) && value.percent>=0 && value.percent<=100 && value.rows.every(q=>validQuestion(q)&&typeof q.correct==='boolean'&&(q.chosen===null||Number.isInteger(q.chosen)&&q.chosen>=0&&q.chosen<q.options.length)));
   if (kind === 'bank') return str(value.id,100)&&str(value.title,160)&&str(value.source,1000)&&str(value.courseId,60)&&Number.isFinite(value.minutes)&&value.minutes>0&&value.minutes<=180&&Array.isArray(value.questions)&&value.questions.length>0&&value.questions.length<=120&&value.questions.every(validQuestion)&&new TextEncoder().encode(JSON.stringify(value)).length<=300000;
   if (kind === 'reading') return finite(value.at) && finite(value.position) && typeof value.completed === 'boolean';
   if (kind === 'resolve') return finite(value.at);

@@ -13,11 +13,12 @@
     "deploy": "npm run build && npx --yes wrangler@4.92.0 deploy",
     "test:standalone": "node --test tests/standalone.test.mjs",
     "test:workers": "node --test tests/access-runtime.test.mjs",
-    "test": "npm run build && npm run test:standalone && npm run test:learning && npm run test:workers && npm run test:vocabulary && npm run test:hsk2 && npm run test:additive",
+    "test": "npm run build && npm run test:standalone && npm run test:learning && npm run test:workers && npm run test:vocabulary && npm run test:hsk2 && npm run test:additive && npm run test:retest",
     "test:learning": "node --test tests/learning.test.mjs",
     "test:vocabulary": "node --test tests/vocabulary.test.mjs",
     "test:hsk2": "node --test tests/hsk2.test.mjs",
-    "test:additive": "node --test tests/additive-updates.test.mjs"
+    "test:additive": "node --test tests/additive-updates.test.mjs",
+    "test:retest": "node --test tests/mistake-retest.test.mjs"
   },
   "devDependencies": {
     "hanzi-writer": "3.7.3",
