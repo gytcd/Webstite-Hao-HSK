@@ -27,7 +27,7 @@ Trong Cloudflare → Workers & Pages → `haohsk` → Settings → Variables and
 | Tên | Loại | Giá trị |
 |---|---|---|
 | `GEMINI_API_KEY` | Secret | Khóa API trong tài khoản Google AI Studio của bạn |
-| `GEMINI_MODEL` | Text, tùy chọn | Mặc định `gemini-3.8-flash`; chọn model hỗ trợ Interactions và structured JSON |
+| `GEMINI_MODEL` | Text, tùy chọn | Mặc định `gemini-3.5-flash-lite`; chọn model hỗ trợ Interactions và structured JSON |
 | `AI_DAILY_LIMIT` | Text, tùy chọn | Mặc định 15 lượt gửi/người/ngày |
 | `AI_GLOBAL_DAILY_LIMIT` | Text, tùy chọn | Mặc định 100 lượt gửi/ngày cho toàn website |
 
@@ -44,10 +44,18 @@ Nếu thất bại, sao chép **Mã kiểm tra** trong ô thông báo, không g�
 | `AI_BILLING_REQUIRED`, `AI_PROJECT_PRECONDITION` | Kiểm tra điều kiện dự án, trạng thái thanh toán và khu vực tại Google AI Studio |
 | `AI_REQUEST_REJECTED` | Gửi mã cho người quản lý để sửa cấu trúc/tham số gọi API |
 | `AI_CONNECTION_FAILED`, `AI_PROVIDER_UNAVAILABLE` | Kiểm tra lại sau; dịch vụ hoặc kết nối đang chưa sẵn sàng |
+| `AI_TIMEOUT`, `AI_NETWORK_ERROR` | Hết thời gian hoặc gián đoạn mạng; câu nhập được giữ lại |
+| `AI_RESPONSE_INCOMPLETE` | Google cắt dở kết quả; thử một câu ngắn hơn |
+| `AI_RESPONSE_FAILED`, `AI_RESPONSE_EMPTY` | Google chưa có nội dung cuối cùng; thử lại sau |
+| `AI_RESPONSE_SHAPE`, `AI_RESPONSE_JSON`, `AI_FEEDBACK_INVALID` | Gửi mã để kiểm tra cấu trúc phản hồi hoặc phần nhận xét chưa hợp lệ |
 
 Nguồn mã lỗi: [Google Interactions API errors](https://ai.google.dev/gemini-api/docs/api-errors). Khóa mới trong Google AI Studio có thể chưa được cấp quyền dùng mọi model; lưu khóa thành công trong Cloudflare không xác nhận hạn mức hay quyền sử dụng của Google.
 
 Ứng dụng gửi REST tới Interactions API, đặt `store: false`, giới hạn độ dài, xác minh cấu trúc JSON trả về và từ chối kết quả chưa hoàn chỉnh. `store: false` không phải cam kết không dùng dữ liệu để huấn luyện. [Điều khoản Gemini](https://ai.google.dev/gemini-api/terms) phân biệt dịch vụ miễn phí và trả phí; nội dung gửi qua dịch vụ miễn phí có thể được dùng để cải thiện sản phẩm. Giao diện yêu cầu người học đồng ý gửi nội dung trước khi gọi API.
+
+Model mặc định là Flash-Lite để phù hợp các tác vụ ngôn ngữ ngắn. Chữa câu/hội thoại dùng mức suy luận `minimal`, chữa bài viết dùng `low`; model khác do chủ website cấu hình vẫn dùng `low`. Phản hồi có tối đa 8.192 token (gồm suy luận), thời gian chờ 75 giây, không tự gọi lại Google khi lỗi. Bộ đọc hỗ trợ phản hồi `steps` và `outputs`, có thể đọc một khối JSON đặt trong code fence nhưng vẫn từ chối trạng thái chưa hoàn tất, JSON bị cắt dở hoặc nhận xét sai cấu trúc. Không hiển thị các khối suy luận. Xem [giới hạn token suy luận](https://ai.google.dev/gemini-api/docs/thought-signatures) và [thay đổi cấu trúc Interactions](https://ai.google.dev/gemini-api/docs/interactions-breaking-changes-may-2026).
+
+Câu thử có lỗi lượng từ: `我昨天买了三本苹果。` Cách sửa phù hợp: `我昨天买了三个苹果。` Giải thích: `本` dùng cho sách; dùng `个` để đếm táo. Đây là ví dụ kiểm tra do Hǎo biên soạn, không phải đề thi chính thức.
 
 Hạn mức đếm lượt yêu cầu sau khi nội dung hợp lệ, kể cả khi nhà cung cấp trả lỗi. Giới hạn này giúp kiểm soát sử dụng, không phải báo cáo thanh toán của Google. Không có khóa thì ứng dụng hiển thị chưa kết nối, không tạo câu trả lời giả.
 

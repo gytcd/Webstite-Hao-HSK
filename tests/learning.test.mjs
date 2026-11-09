@@ -105,6 +105,46 @@ test('incomplete, oversized and malformed AI feedback is not treated as a valid 
   assert.throws(()=>parseAIOutput({status:'completed',steps:[]}));
   assert.throws(()=>parseAIOutput({status:'completed',steps:[{type:'model_output',content:[{type:'text',text:JSON.stringify({...feedback,score:500})}]}]}));
 });
+test('Gemini response revisions and fenced JSON preserve final feedback without exposing thought content',()=>{
+  const text=JSON.stringify(feedback),blocks=[{type:'text',text:text.slice(0,40)},{type:'text',text:text.slice(40)}];
+  assert.deepEqual(parseAIOutput({steps:[{type:'user_input',content:[{type:'text',text:'private user input'}]},{type:'thought',content:[{type:'text',text:'private thoughts'}]},{type:'model_output',content:blocks}]}),feedback);
+  assert.deepEqual(parseAIOutput({status:'completed',outputs:[{type:'text',text:'```json\n'+text+'\n```'}]}),feedback);
+  assert.deepEqual(parseAIOutput({outputs:blocks}),feedback);
+  for(const data of [{status:'in_progress',outputs:blocks},{status:'failed',outputs:blocks},{status:'incomplete',outputs:blocks}])assert.throws(()=>parseAIOutput(data));
+  assert.throws(()=>parseAIOutput({status:'completed',steps:[{type:'thought',content:blocks}]}),{code:'AI_RESPONSE_SHAPE'});
+  assert.throws(()=>parseAIOutput({status:'completed',steps:[],outputs:blocks}),{code:'AI_RESPONSE_SHAPE'});
+  assert.throws(()=>parseAIOutput({outputs:[{type:'text',text:'Here is JSON: '+text}]}),{code:'AI_RESPONSE_JSON'});
+  assert.throws(()=>parseAIOutput({outputs:[{type:'text',text:JSON.stringify({...feedback,issues:null})}]}),{code:'AI_FEEDBACK_INVALID'});
+});
+test('Gemini distinguishes timeouts, interrupted connections, truncation and invalid feedback with no automatic retries',async()=>{
+  const db=database();await initialize(db);const env={DB:db,GEMINI_API_KEY:'private-key'};
+  const cases=[
+    [async()=>{throw new DOMException('private-key','TimeoutError');},'AI_TIMEOUT'],
+    [async()=>{throw new TypeError('private-key');},'AI_NETWORK_ERROR'],
+    [async()=>Response.json({...output(),status:'incomplete'}),'AI_RESPONSE_INCOMPLETE'],
+    [async()=>Response.json({...output(),status:'failed'}),'AI_RESPONSE_FAILED'],
+    [async()=>Response.json({status:'completed',unknown:'private-key'}),'AI_RESPONSE_SHAPE'],
+    [async()=>Response.json({status:'completed',outputs:[]}),'AI_RESPONSE_EMPTY'],
+    [async()=>new Response('private-key'),'AI_RESPONSE_JSON'],
+    [async()=>new Response('x'.repeat(100001)),'AI_RESPONSE_TOO_LARGE'],
+    [async()=>Response.json({outputs:[{type:'text',text:JSON.stringify({...feedback,score:500})}]}),'AI_FEEDBACK_INVALID'],
+    [async()=>({ok:true,text:async()=>{throw new DOMException('private-key','AbortError');}}),'AI_TIMEOUT']
+  ];
+  for(let i=0;i<cases.length;i++){
+    const [upstream,code]=cases[i];let calls=0;
+    const response=await aiHandler(post('/api/ai',{mode:'grammar',text:'你好'},{'x-hao-ai':'1'}),env,{...user,userId:'output-'+i},{fetcher:async(url,options)=>{calls++;const body=JSON.parse(options.body);assert.equal(body.model,'gemini-3.5-flash-lite');assert.equal(body.stream,false);assert.equal(body.store,false);assert.equal(body.generation_config.thinking_level,'minimal');assert.equal(body.generation_config.max_output_tokens,8192);assert.equal(options.headers['Api-Revision'],'2026-05-20');return upstream();}});
+    const data=await response.json();assert.equal(response.status,502);assert.equal(data.code,code);assert.equal(JSON.stringify(data).includes('private-key'),false);assert.equal(calls,1);
+  }
+  db.sql.close();
+});
+test('configured Gemini models and writing tasks retain supported low thinking with strict feedback validation',async()=>{
+  const db=database();await initialize(db);
+  for(const [mode,customModel] of [['writing',undefined],['grammar','models/gemini-3.8-flash']]){
+    const response=await aiHandler(post('/api/ai',{mode,text:'我昨天买了三本苹果。'},{'x-hao-ai':'1'}),{DB:db,GEMINI_API_KEY:'test-key',GEMINI_MODEL:customModel},{...user,userId:mode},{fetcher:async(_,options)=>{const body=JSON.parse(options.body);assert.equal(body.generation_config.thinking_level,'low');assert.equal(body.model,customModel?'gemini-3.8-flash':'gemini-3.5-flash-lite');return Response.json({status:'completed',outputs:[{type:'text',text:JSON.stringify(feedback)}]});}});
+    assert.equal(response.status,200);assert.deepEqual((await response.json()).result,feedback);
+  }
+  db.sql.close();
+});
 test('connection checks verify Google model access without sending learner text or consuming study quota',async()=>{
   const db=database();await initialize(db);const env={DB:db,GEMINI_API_KEY:'private-key',GEMINI_MODEL:'models/gemini-3.8-flash'};let calls=0;
   const fetcher=async(url,options)=>{calls++;assert.equal(url,'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash');assert.equal(options.headers['x-goog-api-key'],'private-key');assert.equal(options.redirect,'manual');assert.equal(options.body,undefined);return Response.json({name:'models/gemini-3.8-flash'});};

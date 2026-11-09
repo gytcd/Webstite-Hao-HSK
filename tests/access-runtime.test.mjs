@@ -92,15 +92,17 @@ test('production Worker verifies identity, uses native D1 and calls Gemini throu
     bindings:{...settings,GEMINI_API_KEY:'runtime-test-key'},
     d1Databases:{DB:'learning-test-database'},
     serviceBindings:{ASSETS:()=>{assets++;return new RuntimeResponse('private asset');}},
-    outboundService:request=>{
+    outboundService:async request=>{
       if(request.url==='https://'+settings.ACCESS_TEAM_DOMAIN+'/cdn-cgi/access/certs')return RuntimeResponse.json({keys:[jwk]});
-      if(request.url==='https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash'){
+      if(request.url==='https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite'){
         metadataCalls++;assert.equal(request.headers.get('x-goog-api-key'),'runtime-test-key');
-        return providerError ? RuntimeResponse.json({error:{code:403,status:'PERMISSION_DENIED',message:'private runtime-test-key',details:[{reason:'API_KEY_HTTP_REFERRER_BLOCKED'}]}},{status:403}) : RuntimeResponse.json({name:'models/gemini-3.8-flash'});
+        return providerError ? RuntimeResponse.json({error:{code:403,status:'PERMISSION_DENIED',message:'private runtime-test-key',details:[{reason:'API_KEY_HTTP_REFERRER_BLOCKED'}]}},{status:403}) : RuntimeResponse.json({name:'models/gemini-3.5-flash-lite'});
       }
       assert.equal(request.url,'https://generativelanguage.googleapis.com/v1beta/interactions');
       assert.equal(request.headers.get('x-goog-api-key'),'runtime-test-key');modelCalls++;
-      return RuntimeResponse.json({status:'completed',steps:[{type:'model_output',content:[{type:'text',text:JSON.stringify(feedback)}]}]});
+      assert.equal(request.headers.get('Api-Revision'),'2026-05-20');
+      const body=await request.json();assert.equal(body.model,'gemini-3.5-flash-lite');assert.equal(body.stream,false);assert.equal(body.generation_config.thinking_level,'minimal');
+      return RuntimeResponse.json({outputs:[{type:'text',text:'```json\n'+JSON.stringify(feedback)+'\n```'}]});
     }
   });
   try {
