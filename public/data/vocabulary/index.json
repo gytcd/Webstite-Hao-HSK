@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "dataset": "hsk-vocabulary-2025",
+  "edition": "HSK 考试大纲 · bản2025-11 người dùng cung cấp",
+  "total": 11000,
+  "columns": [
+    "serial",
+    "hanzi",
+    "pinyin",
+    "meaningVi",
+    "partOfSpeechZh",
+    "officialPdfPage",
+    "translationSource",
+    "translationPdfPage",
+    "translationSerial",
+    "homograph",
+    "officialLevelLabel"
+  ],
+  "official": {
+    "file": "新版HSK考试大纲1219.PDF",
+    "sha256": "d8e2a8051abb2af14212886b977755cfa396652bfca27f7747534eaa086ca253",
+    "pdfPages": [
+      80,
+      354
+    ]
+  },
+  "sources": [
+    {
+      "name": "PREP · HSK 1",
+      "file": "tu_vung_hsk_1_prep_d072618b24.PDF",
+      "sha256": "544450a0b8c514e89c19bab9b1d56f9cc083269e49f540888f22ee03e38a994b",
+      "rows": 300,
+      "attribution": "Nghĩa tiếng Việt trong PDF người dùng cung cấp. Các PDF4–9 ghi tham khảo CC-CEDICT (CC BY-SA4.0)."
+    },
+    {
+      "name": "PREP · HSK 2",
+      "file": "tu_vung_hsk_2_prep_62814b81a1.PDF",
+      "sha256": "5881bb3e8dd83311bd83813647ae394b8767edd8f6f1e223fffd48af965cd023",
+      "rows": 277,
+      "attribution": "Nghĩa tiếng Việt trong PDF người dùng cung cấp. Các PDF4–9 ghi tham khảo CC-CEDICT (CC BY-SA4.0)."
+    },
+    {
+      "name": "PREP · HSK 3",
+      "file": "tu_vung_hsk_3_prep_ade7435e3d.PDF",
+      "sha256": "6fb0d7f7bd8897ae502cceab1ebcb93043b6c3f154f4592dbc9d94c6be6104ca",
+      "rows": 507,
+      "attribution": "Nghĩa tiếng Việt trong PDF người dùng cung cấp. Các PDF4–9 ghi tham khảo CC-CEDICT (CC BY-SA4.0)."
+    },
+    {
+      "name": "PREP · HSK 4",
+      "file": "tu_vung_hsk_4_prep_3c740feed1.PDF",
+      "sha256": "fee3cab79756b4e8132c9e4a94100d82cc6b3163771176c01898993cdbaf6987",
+      "rows": 1000,
+      "attribution": "Nghĩa tiếng Việt trong PDF người dùng cung cấp. Các PDF4–9 ghi tham khảo CC-CEDICT (CC BY-SA4.0)."
+    },
+    {
+      "name": "PREP · HSK 5",
+      "file": "tu_vung_hsk_5_prep_8ff8e54f06.PDF",
+      "sha256": "4813cee25ddf3afafba92da7c182acf09cd8c88524ef7be1d252e1385d5406d7",
+      "rows": 1600,
+      "attribution": "Nghĩa tiếng Việt trong PDF người dùng cung cấp. Các PDF4–9 ghi tham khảo CC-CEDICT (CC BY-SA4.0)."
+    },
+    {
+      "name": "PREP · HSK 6",
+      "file": "tu_vung_hsk_6_prep_d88bc949ca.PDF",
+      "sha256": "b44f39e3a6ef79cef0c84bbc4b93680be9c6b313eb0f7d306f1c19aee10f15f5",
+      "rows": 1800,
+      "attribution": "Nghĩa tiếng Việt trong PDF người dùng cung cấp. Các PDF4–9 ghi tham khảo CC-CEDICT (CC BY-SA4.0)."
+    },
+    {
+      "name": "PREP · HSK 7-9",
+      "file": "tu_vung_hsk_7_9_prep_5b7a35e9ab.PDF",
+      "sha256": "619df7aaabc683de4385cc7042d8dc2c5938a50d5595fe696f7965798aed7204",
+      "rows": 5600,
+      "attribution": "Nghĩa tiếng Việt trong PDF người dùng cung cấp. Các PDF4–9 ghi tham khảo CC-CEDICT (CC BY-SA4.0)."
+    },
+    {
+      "name": "Hǎo · nghĩa bổ sung",
+      "attribution": "Nghĩa tiếng Việt biên soạn bổ sung, được ghi riêng trong chú thích từng mục."
+    }
+  ],
+  "notes": {
+    "93": {
+      "kind": "hao-supplement",
+      "note": "Nghĩa tiếng Việt do Hǎo bổ sung cho mục chưa có trong bộ PREP đã gửi; không phải bản dịch trích từ đề cương."
+    },
+    "110": {
+      "kind": "reviewed-reading-variant",
+      "note": "Giữ pinyin theo đề cương; phiên âm trong PREP có biến thể hoặc lỗi trích xuất.",
+      "sourcePinyin": "li"
+    },
+    "122": {
+      "kind": "reviewed-source-variant",
+      "note": "Hǎo đối chiếu biến thể/cặp cấu trúc trong PREP với mục riêng của đề cương.",
+      "sourceSpelling": "没（有）"
+    },
+    "175": {
+      "kind": "reviewed-reading-variant",
+      "note": "Giữ pinyin theo đề cương; phiên âm trong PREP có biến thể hoặc lỗi trích xuất.",
+      "sourcePinyin": "shang"
+    },
+    "181": {
+      "kind": "reviewed-reading-variant",
+      "note": "Giữ pinyin theo đề cương; phiên âm trong PREP có biến thể hoặc lỗi trích xuất.",
+      "sourcePinyin": "shéi / shúi"
+    },
+    "265": {
+      "kind": "hao-supplement",
+      "note": "Nghĩa tiếng Việt do Hǎo bổ sung cho mục chưa có trong bộ PREP đã gửi; không phải bản dịch trích từ đề cương."
+    },
+    "273": {
+      "kind": "hao-supplement",
+      "note": "Nghĩa tiếng Việt do Hǎo bổ sung cho mục chưa có trong bộ PREP đã gửi; không phải bản dịch trích từ đề cương."
+    },
+    "349": {
+      "kind": "source-pinyin-corrected",
+      "note": "Giữ pinyin theo đề cương; phiên âm trong PREP có biến thể hoặc lỗi trích xuất.",
+      "sourcePinyin": "guòqù"
+    },
+    "358": {
+      "kind": "hao-supplement",
+      "note": "Hǎo bổ sung nghĩa tính từ theo chú thích cấp 2（6） của đề cương.",
+      "reference": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=5018&la=1&powerMode=0"
+    },
+    "373": {
+      "kind": "hao-supplement",
+      "note": "Nghĩa tiếng Việt do Hǎo bổ sung cho mục chưa có trong bộ PREP đã gửi; không phải bản dịch trích từ đề cương."
+    },
+    "396": {
+      "kind": "hao-supplement",
+      "note": "Nghĩa tiếng Việt do Hǎo bổ sung cho mục chưa có trong bộ PREP đã gửi; không phải bản dịch trích từ đề cương."
+    },
+    "427": {
+      "kind": "hao-supplement",
+      "note": "Nghĩa tiếng Việt do Hǎo bổ sung cho mục chưa có trong bộ PREP đã gửi; không phải bản dịch trích từ đề cương."
+    },
+    "438": {
+      "kind": "reviewed-source-variant",
+      "note": "Hǎo đối chiếu biến thể/cặp cấu trúc trong PREP với mục riêng của đề cương.",
+      "sourceSpelling": "虽然……但是……"
+    },
+    "439": {
+      "kind": "reviewed-source-variant",
+      "note": "Hǎo đối chiếu biến thể/cặp cấu trúc trong PREP với mục riêng của đề cương.",
+      "sourceSpelling": "因为……所以……"
+    },
+    "475": {
+      "kind": "reviewed-source-variant",
+      "note": "Hǎo đối chiếu biến thể/cặp cấu trúc trong PREP với mục riêng của đề cương.",
+      "sourceSpelling": "因为……所以……"
+    },
+    "479": {
+      "kind": "reviewed-source-variant",
+      "note": "Hǎo đối chiếu biến thể/cặp cấu trúc trong PREP với mục riêng của đề cương.",
+      "sourceSpelling": "有时（候）"
+    },
+    "4147": {
+      "kind": "hao-correction",
+      "note": "Hǎo hiệu đính để phân biệt 横 héng (ngang) và 横 hèng (ngang ngược).",
+      "reference": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=4941&la=0&powerMode=0"
+    },
+    "7060": {
+      "kind": "hao-correction",
+      "note": "Hǎo hiệu đính để phân biệt 横 héng (ngang) và 横 hèng (ngang ngược).",
+      "reference": "https://dict.revised.moe.edu.tw/dictView.jsp?ID=4941&la=0&powerMode=0"
+    },
+    "7452": {
+      "kind": "reviewed-reading-variant",
+      "note": "Giữ pinyin theo đề cương; phiên âm trong PREP có biến thể hoặc lỗi trích xuất.",
+      "sourcePinyin": "jiǎotāshídì"
+    },
+    "8825": {
+      "kind": "reviewed-reading-variant",
+      "note": "Giữ pinyin theo đề cương; phiên âm trong PREP có biến thể hoặc lỗi trích xuất.",
+      "sourcePinyin": "rénxìng"
+    }
+  },
+  "groups": [
+    {
+      "level": "1",
+      "count": 300,
+      "cumulative": 300,
+      "url": "/data/vocabulary/hsk-1.json"
+    },
+    {
+      "level": "2",
+      "count": 200,
+      "cumulative": 500,
+      "url": "/data/vocabulary/hsk-2.json"
+    },
+    {
+      "level": "3",
+      "count": 500,
+      "cumulative": 1000,
+      "url": "/data/vocabulary/hsk-3.json"
+    },
+    {
+      "level": "4",
+      "count": 1000,
+      "cumulative": 2000,
+      "url": "/data/vocabulary/hsk-4.json"
+    },
+    {
+      "level": "5",
+      "count": 1600,
+      "cumulative": 3600,
+      "url": "/data/vocabulary/hsk-5.json"
+    },
+    {
+      "level": "6",
+      "count": 1800,
+      "cumulative": 5400,
+      "url": "/data/vocabulary/hsk-6.json"
+    },
+    {
+      "level": "7-9",
+      "count": 5600,
+      "cumulative": 11000,
+      "url": "/data/vocabulary/hsk-7-9.json"
+    }
+  ],
+  "audit": {
+    "prepRows": 11084,
+    "methods": {
+      "exact-reading": 10982,
+      "hao-supplement": 6,
+      "reviewed-reading-variant": 6,
+      "reviewed-source-variant": 5,
+      "source-pinyin-corrected": 1
+    },
+    "jointAdvancedLevel": true
+  }
+}

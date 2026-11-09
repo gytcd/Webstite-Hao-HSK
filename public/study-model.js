@@ -27,7 +27,8 @@ export function streakInfo(days, at = Date.now()) {
   }
   return {current, best, studiedToday: set.has(today)};
 }
-export const cardKey = (courseId, word) => courseId + ':' + word;
+export const wordIdentity = word => word && typeof word === 'object' ? word.uid || word.h : word;
+export const cardKey = (courseId, word) => courseId + ':' + wordIdentity(word);
 export const emptyCard = () => ({repetitions: 0, interval: 0, ease: 2.5, due: 0, lapses: 0, reviews: 0});
 export function scheduleReview(previous, grade, at) {
   if (![0, 2, 3, 4].includes(grade) || !Number.isFinite(at)) throw Error('Lượt ôn không hợp lệ.');
@@ -54,7 +55,7 @@ export function cardsFromReviews(reviews) {
 export function reviewQueue(words, courseId, cards, {now = Date.now(), newLimit = 10} = {}) {
   const due = [], fresh = [];
   for (const word of words) {
-    const id = cardKey(courseId, word.h), card = cards.get(id);
+    const id = cardKey(courseId, word), card = cards.get(id);
     if (!card) fresh.push({...word, card: id, isNew: true});
     else if (card.due <= now) due.push({...word, card: id, isNew: false, due: card.due});
   }
@@ -63,19 +64,19 @@ export function reviewQueue(words, courseId, cards, {now = Date.now(), newLimit 
 export function allCourseWords(course, custom = []) {
   const words = (course.lessons || []).flatMap(l => (l.words || []).map(w => ({...w, lesson: l.number, courseId: course.id, source: l.sourceNote || course.name})));
   words.push(...custom.filter(w => w.courseId === course.id).map(w => ({...w, source: 'Bộ từ của bạn'})));
-  return [...new Map(words.filter(w => w.h && w.v).map(w => [w.h, w])).values()];
+  return [...new Map(words.filter(w => w.h && w.v).map(w => [wordIdentity(w), w])).values()];
 }
 export function shuffle(items, random = Math.random) {
   const a = [...items]; for (let i = a.length - 1; i > 0; i--) {const j = Math.floor(random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]];} return a;
 }
 export function createQuestions(words, {count = 20, listening = false, random = Math.random} = {}) {
-  const uniqueHanzi = [...new Map(words.map(w => [w.h, w])).values()];
+  const uniqueHanzi = [...new Map(words.map(w => ({...w,v:w.v.length>300?w.v.slice(0,297)+'…':w.v})).map(w => [w.h, w])).values()];
   const pool = [...new Map(uniqueHanzi.map(w => [w.v, w])).values()];
   if (pool.length < 4) throw Error('Cần ít nhất 4 từ có nghĩa khác nhau.');
   return shuffle(pool, random).slice(0, Math.min(60, count)).map((w, i) => {
     const kind = listening && i % 3 === 0 ? 'listening' : i % 2 === 0 ? 'meaning' : 'hanzi';
     const options = shuffle([w, ...shuffle(pool.filter(x => x.v !== w.v && x.h !== w.h), random).slice(0,3)], random);
-    return {id: cardKey(w.courseId, w.h) + ':' + kind, kind, word: w.h, pinyin: w.p || '', meaning: w.v, lesson: w.lesson || null, courseId: w.courseId, source: w.source || '', prompt: kind === 'hanzi' ? w.v : w.h, options: options.map(o => kind === 'hanzi' ? o.h : o.v), answer: options.findIndex(o => o.h === w.h)};
+    return {id: cardKey(w.courseId, w) + ':' + kind, card:cardKey(w.courseId,w), kind, word: w.h, pinyin: w.p || '', meaning: w.v, lesson: w.lesson || null, courseId: w.courseId, source: w.source || '', prompt: kind === 'hanzi' ? w.v : w.h, options: options.map(o => kind === 'hanzi' ? o.h : o.v), answer: options.findIndex(o => o.h === w.h)};
   });
 }
 export function finishAttempt(attempt, now = Date.now()) {

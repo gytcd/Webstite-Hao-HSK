@@ -1,3 +1,5 @@
+Kho từ HSK1–9 đã có11.000mục theo đề cương2025-11 được cung cấp, với nhóm7–9 chung. Xem [nguồn, số lượng và cách cập nhật dữ liệu](VOCABULARY-HSK.md).
+
 # Các công cụ luyện HSK của Hǎo
 
 Website tiếp tục chạy trên Cloudflare Workers và D1, độc lập với ChatGPT và máy tính của bạn. Không cần thêm máy chủ Express chạy liên tục. Node.js dùng cho phát triển, đóng gói và kiểm tra.
